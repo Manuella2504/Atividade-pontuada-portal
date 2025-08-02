@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil Acadêmico</title>
+    <link rel="stylesheet" href="../CSS/perfil.css">
+    <script src="../JS/perfil.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="profile-photo" id="profilePhoto">+</div>
+            <h1 id="userName">Seu Nome</h1>
+            <p class="subtitle" id="userTitle">Seu Título Profissional</p>
+        </header>
+
+        <div class="main-content">
+            <aside class="sidebar">
+                <div class="section">
+                    <h2>Informações Pessoais <button class="edit-btn" onclick="editSection('info-pessoais')">✏️</button></h2>
+                    <div class="contact-grid" id="contactInfo">
+                        <div class="empty-state">
+                            Clique no botão de editar para adicionar suas informações pessoais
+                        </div>
+                    </div>
+                    <a href="#" class="lattes-link" id="lattesLink" style="display: none;" target="_blank">
+                        📄 Currículo Lattes
+                    </a>
+                </div>
+
+                <div class="section">
+                    <h2>Idiomas <button class="edit-btn" onclick="editSection('idiomas')">✏️</button></h2>
+                    <div id="languagesArea">
+                        <div class="empty-state">
+                            Adicione os idiomas que você domina
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="content">
+                <div class="section">
+                    <h2>Formação Acadêmica <button class="edit-btn" onclick="editSection('formacao')">✏️</button></h2>
+                    <div id="educationArea">
+                        <div class="empty-state">
+                            Adicione sua formação acadêmica
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>Experiência Profissional <button class="edit-btn" onclick="editSection('experiencia')">✏️</button></h2>
+                    <div id="experienceArea">
+                        <div class="empty-state">
+                            Adicione sua experiência profissional
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal para edição -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Editar Seção</h2>
+            <div id="modalForm"></div>
+            <button class="save-btn" onclick="saveChanges()">Salvar</button>
+            <button class="cancel-btn" onclick="closeModal()">Cancelar</button>
+        </div>
+    </div>
+
+  
+</body>
+</html>

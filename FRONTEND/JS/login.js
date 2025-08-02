@@ -1,139 +1,204 @@
-   
-        // Toggle senha
-        const togglePassword = document.getElementById('togglePassword');
-        const passwordInput = document.getElementById('password');
 
-        togglePassword.addEventListener('click', function() {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            this.textContent = type === 'password' ? 'Mostrar' : 'Ocultar';
-        });
-
-        // Validação de email
-        function isValidEmail(email) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(email);
-        }
-
-        // Função para mostrar mensagens
-        function showMessage(message, type = 'error') {
-            const errorMsg = document.getElementById('errorMessage');
-            const successMsg = document.getElementById('successMessage');
-            
-            // Esconde todas as mensagens primeiro
-            errorMsg.style.display = 'none';
-            successMsg.style.display = 'none';
-            
-            if (type === 'error') {
-                errorMsg.textContent = message;
-                errorMsg.style.display = 'block';
-            } else {
-                successMsg.textContent = message;
-                successMsg.style.display = 'block';
-            }
-
-            // Auto-hide após 5 segundos
-            setTimeout(() => {
-                errorMsg.style.display = 'none';
-                successMsg.style.display = 'none';
-            }, 5000);
-        }
-
-        // Manipulação do formulário
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
-            const loginBtn = document.getElementById('loginBtn');
-
-            // Validações
-            if (!email) {
-                showMessage('Por favor, digite seu e-mail.');
-                document.getElementById('email').focus();
-                return;
-            }
-
-            if (!isValidEmail(email)) {
-                showMessage('Por favor, digite um e-mail válido.');
-                document.getElementById('email').focus();
-                return;
-            }
-
-            if (!password) {
-                showMessage('Por favor, digite sua senha.');
-                document.getElementById('password').focus();
-                return;
-            }
-
-            if (password.length < 6) {
-                showMessage('A senha deve ter pelo menos 6 caracteres.');
-                document.getElementById('password').focus();
-                return;
-            }
-
-            // Simulação de login
-            loginBtn.innerHTML = '<span class="loading"></span>Entrando...';
-            loginBtn.disabled = true;
-
-            setTimeout(() => {
-                // Simula diferentes cenários de login
-                const scenarios = ['success', 'invalid', 'error'];
-                const scenario = scenarios[Math.floor(Math.random() * scenarios.length)];
-
-                switch(scenario) {
-                    case 'success':
-                        showMessage('Login realizado com sucesso! Redirecionando...', 'success');
-                        setTimeout(() => {
-                            console.log('Redirecionando para dashboard...');
-                            // window.location.href = '/dashboard';
-                        }, 2000);
-                        break;
-                    
-                    case 'invalid':
-                        showMessage('E-mail ou senha incorretos. Tente novamente.');
-                        break;
-                    
-                    case 'error':
-                        showMessage('Erro no servidor. Tente novamente em alguns minutos.');
-                        break;
-                }
-
-                // Restaura o botão
-                loginBtn.innerHTML = 'Entrar';
-                loginBtn.disabled = false;
-            }, 2000);
-        });
-
-        // Navegação (simulação)
-        document.querySelectorAll('.nav-menu a, .signup-link a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const href = this.getAttribute('href');
-                console.log('Navegando para:', href);
+        class LoginValidator {
+            constructor() {
+                this.form = document.getElementById('loginForm');
+                this.emailInput = document.getElementById('email');
+                this.passwordInput = document.getElementById('password');
+                this.loginBtn = document.getElementById('loginBtn');
+                this.loadingSpinner = document.getElementById('loadingSpinner');
+                this.btnText = document.getElementById('btnText');
+                this.alertContainer = document.getElementById('alertContainer');
                 
-                if (href === '#cadastro') {
-                    showMessage('Redirecionando para página de cadastro...', 'success');
-                } else if (href === '#inicio') {
-                    showMessage('Redirecionando para página inicial...', 'success');
-                }
-            });
-        });
-
-        // Link "Esqueceu sua senha?"
-        document.querySelector('.forgot-password a').addEventListener('click', function(e) {
-            e.preventDefault();
-            showMessage('Funcionalidade de recuperação de senha em desenvolvimento.', 'success');
-        });
-
-        // Efeito de foco automático no primeiro campo
-        window.addEventListener('load', function() {
-            document.getElementById('email').focus();
-        });
-
-        // Enter para submeter o formulário
-        document.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter' && e.target.tagName !== 'BUTTON') {
-                document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+                this.init();
             }
+
+            init() {
+                this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+                this.emailInput.addEventListener('blur', () => this.validateEmail());
+                this.passwordInput.addEventListener('blur', () => this.validatePassword());
+                this.emailInput.addEventListener('input', () => this.clearFieldError('email'));
+                this.passwordInput.addEventListener('input', () => this.clearFieldError('password'));
+            }
+
+            validateEmail() {
+                const email = this.emailInput.value.trim();
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                
+                if (!email) {
+                    this.showFieldError('email', 'E-mail é obrigatório');
+                    return false;
+                }
+                
+                if (!emailRegex.test(email)) {
+                    this.showFieldError('email', 'Digite um e-mail válido');
+                    return false;
+                }
+                
+                this.showFieldSuccess('email');
+                return true;
+            }
+
+            validatePassword() {
+                const password = this.passwordInput.value;
+                
+                if (!password) {
+                    this.showFieldError('password', 'Senha é obrigatória');
+                    return false;
+                }
+                
+                if (password.length < 6) {
+                    this.showFieldError('password', 'Senha deve ter pelo menos 6 caracteres');
+                    return false;
+                }
+                
+                this.showFieldSuccess('password');
+                return true;
+            }
+
+            showFieldError(fieldName, message) {
+                const input = document.getElementById(fieldName);
+                const errorElement = document.getElementById(fieldName + 'Error');
+                
+                input.classList.remove('success');
+                input.classList.add('error');
+                errorElement.textContent = message;
+                errorElement.classList.add('show');
+            }
+
+            showFieldSuccess(fieldName) {
+                const input = document.getElementById(fieldName);
+                const errorElement = document.getElementById(fieldName + 'Error');
+                
+                input.classList.remove('error');
+                input.classList.add('success');
+                errorElement.classList.remove('show');
+            }
+
+            clearFieldError(fieldName) {
+                const input = document.getElementById(fieldName);
+                const errorElement = document.getElementById(fieldName + 'Error');
+                
+                input.classList.remove('error');
+                errorElement.classList.remove('show');
+            }
+
+            showAlert(message, type = 'danger') {
+                const alertHTML = `
+                    <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                        ${message}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                `;
+                this.alertContainer.innerHTML = alertHTML;
+                
+                // Auto remove after 5 seconds
+                setTimeout(() => {
+                    const alert = this.alertContainer.querySelector('.alert');
+                    if (alert) {
+                        const bsAlert = new bootstrap.Alert(alert);
+                        bsAlert.close();
+                    }
+                }, 5000);
+            }
+
+            setLoading(isLoading) {
+                if (isLoading) {
+                    this.loginBtn.disabled = true;
+                    this.loadingSpinner.style.display = 'inline-block';
+                    this.btnText.textContent = 'Entrando...';
+                } else {
+                    this.loginBtn.disabled = false;
+                    this.loadingSpinner.style.display = 'none';
+                    this.btnText.textContent = 'Entrar';
+                }
+            }
+
+            async handleSubmit(e) {
+                e.preventDefault();
+                
+                // Clear previous alerts
+                this.alertContainer.innerHTML = '';
+                
+                const emailValid = this.validateEmail();
+                const passwordValid = this.validatePassword();
+                
+                if (!emailValid || !passwordValid) {
+                    this.showAlert('Por favor, corrija os erros nos campos destacados.');
+                    return;
+                }
+                
+                this.setLoading(true);
+                
+                try {
+                    // Simular requisição de login
+                    await this.simulateLogin();
+                    
+                    // Sucesso
+                    this.showAlert('Login realizado com sucesso! Redirecionando...', 'success');
+                    
+                    // Simular redirecionamento após 2 segundos
+                    setTimeout(() => {
+                        // window.location.href = 'dashboard.html';
+                        console.log('Redirecionando para o dashboard...');
+                    }, 2000);
+                    
+                } catch (error) {
+                    this.showAlert(error.message);
+                } finally {
+                    this.setLoading(false);
+                }
+            }
+
+            async simulateLogin() {
+                // Simular delay de rede
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                const email = this.emailInput.value.trim();
+                const password = this.passwordInput.value;
+                
+                // Simular validação no servidor
+                if (email === 'admin@portal.com' && password === '123456') {
+                    return { success: true };
+                } else {
+                    throw new Error('E-mail ou senha incorretos. Tente novamente.');
+                }
+            }
+        }
+
+        // Inicializar quando o DOM estiver carregado
+        document.addEventListener('DOMContentLoaded', () => {
+            new LoginValidator();
+        });
+
+        // Adicionar animação suave aos elementos
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Animar elementos da ilustração
+            document.querySelectorAll('.illustration-container > *').forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = `all 0.6s ease ${index * 0.2}s`;
+                observer.observe(el);
+            });
+
+            // Animar elementos do formulário
+            document.querySelectorAll('.login-side > *').forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = `all 0.5s ease ${index * 0.1}s`;
+                observer.observe(el);
+            });
         });

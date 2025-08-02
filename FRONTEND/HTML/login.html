@@ -5,80 +5,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Portal de Acesso</title>
     <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../CSS/login.css">
     <script src="../JS/login.js"></script>
-    <link rel="icon" href="../IMAGENS/favicon.ico" type="image/x-icon">
 </head>
+
 <body>
     <!-- Header -->
-<header class="header">
-
-   <nav class="navbar navbar-expand-lg bg-body-tertiary">
-   <div class="container-fluid">
-    <img src="" alt="Logo">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Inicio</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Cadastre-se</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-</header>
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiM3NTAwNzkiLz4KPHRleHQgeD0iMjAiIHk9IjI1IiBmaWxsPSJ3aGl0ZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UEE8L3RleHQ+Cjwvc3ZnPgo=" alt="Portal de Acesso">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="./inicio.html">Início</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="./login.html">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./cadastro.html">Cadastre-se</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
 
     <!-- Main Content -->
     <main class="main-container">
-        <div class="login-container">
-            <h1 class="login-title">Bem-vindo!</h1>
-            <p class="login-subtitle">Faça login para acessar sua conta</p>
-            
-            <div id="errorMessage" class="error-message"></div>
-            <div id="successMessage" class="success-message"></div>
-            
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="email">E-mail</label><br>
-                    <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
+        <div class="login-wrapper">
+            <!-- Lado da Ilustração -->
+            <div class="illustration-side">
+                <div class="background-shapes">
+                    <div class="shape shape-1"></div>
+                    <div class="shape shape-2"></div>
+                    <div class="shape shape-3"></div>
                 </div>
-
-                <div class="form-group">
-                    <label for="password">Senha</label>
-                    <div class="input-container">
-                        <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
-                    </div>
-                    <div class="forgot-password">
-                        <a href="#forgot" id="forgot">Esqueceu sua senha?</a>
-                    </div>
+                <div class="illustration-container">
+                    <div class="illustration-icon">🎓📚👥</div>
+                    <div class="illustration-text">Portal Acadêmico</div>
+                    <div class="illustration-subtitle">Portal da Equipe Rocket<br></div>
                 </div>
+            </div>
 
-                <button type="submit" class="login-btn" id="loginBtn">
-                    Entrar
-                </button>
+            <!-- Lado do Login -->
+            <div class="login-side">
+                <h1 class="login-title">Bem-vindo!</h1>
+                <p class="login-subtitle">Faça login para acessar sua conta</p>
+                
+                <div id="alertContainer"></div>
+                
+                <form id="loginForm" novalidate>
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Digite seu e-mail" required>
+                        <div class="error-text" id="emailError"></div>
+                    </div>
 
+                    <div class="form-group">
+                        <label for="password">Senha</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Digite sua senha" required>
+                        <div class="error-text" id="passwordError"></div>
+                        <div class="forgot-password">
+                            <a href="#forgot" id="forgot">Esqueceu sua senha?</a>
+                        </div>
+                    </div>
 
-                <p class="signup-link">
-                    Não tem uma conta? <a href="#cadastro">Cadastre-se aqui</a>
-                </p>
-            </form>
+                    <button type="submit" class="login-btn" id="loginBtn">
+                        <span class="loading-spinner" id="loadingSpinner"></span>
+                        <span id="btnText">Entrar</span>
+                    </button>
+
+                    <p class="signup-link">
+                        Não tem uma conta? <a href="./cadastro.html">Cadastre-se aqui</a>
+                    </p>
+                </form>
+            </div>
         </div>
     </main>
 
-
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js" integrity="sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK" crossorigin="anonymous"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

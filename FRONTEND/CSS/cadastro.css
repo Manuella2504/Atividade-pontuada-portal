@@ -273,9 +273,16 @@
             transform: scale(1.2);
         }
 
-        .form-actions {
+        .form-actionss {
             display: flex;
             justify-content: flex-end;
+            margin-top: 40px;
+            gap: 20px;
+        }
+
+                .form-actions {
+            display: flex;
+            justify-content: space-between;
             margin-top: 40px;
             gap: 20px;
         }
@@ -407,7 +414,11 @@
                 gap: 15px;
             }
 
-            .form-actions {
+            .form-actionss {
+                flex-direction: column;
+            }
+
+             .form-actions {
                 flex-direction: column;
             }
 

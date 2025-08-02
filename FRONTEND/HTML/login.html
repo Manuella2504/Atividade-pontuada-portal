@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Portal de Acesso</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/login.css">
+    script src="../JS/login.js"></script>
+    <link rel="icon" href="../IMAGENS/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">Portal de Acesso</div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#inicio">Início</a></li>
+                    <li><a href="#cadastro">Cadastro</a></li>
+                    <li><a href="#login" class="active">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="login-container">
+            <h1 class="login-title">Bem-vindo!</h1>
+            <p class="login-subtitle">Faça login para acessar sua conta</p>
+            
+            <div id="errorMessage" class="error-message"></div>
+            <div id="successMessage" class="success-message"></div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <div class="input-container">
+                        <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
+                        <button type="button" class="password-toggle" id="togglePassword">
+                            Mostrar
+                        </button>
+                    </div>
+                    <div class="forgot-password">
+                        <a href="#forgot">Esqueceu sua senha?</a>
+                    </div>
+                </div>
+
+                <button type="submit" class="login-btn" id="loginBtn">
+                    Entrar
+                </button>
+
+                <div class="divider">
+                    <span>ou</span>
+                </div>
+
+                <p class="signup-link">
+                    Não tem uma conta? <a href="#cadastro">Cadastre-se aqui</a>
+                </p>
+            </form>
+        </div>
+    </main>
+
+</body>
+</html>

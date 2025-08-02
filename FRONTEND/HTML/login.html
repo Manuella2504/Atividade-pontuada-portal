@@ -5,27 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Portal de Acesso</title>
     <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <link rel="stylesheet" href="../CSS/login.css">
-    script src="../JS/login.js"></script>
+    <script src="../JS/login.js"></script>
     <link rel="icon" href="../IMAGENS/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <div class="logo">Portal de Acesso</div>
-            <nav>
-                <ul class="nav-menu">
-                    <li><a href="#inicio">Início</a></li>
-                    <li><a href="#cadastro">Cadastro</a></li>
-                    <li><a href="#login" class="active">Login</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+<header class="header">
+
+   <nav class="navbar navbar-expand-lg bg-body-tertiary">
+   <div class="container-fluid">
+    <img src="" alt="Logo">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Cadastre-se</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
 
     <!-- Main Content -->
-    <main class="main-content">
+    <main class="main-container">
         <div class="login-container">
             <h1 class="login-title">Bem-vindo!</h1>
             <p class="login-subtitle">Faça login para acessar sua conta</p>
@@ -35,7 +50,7 @@
             
             <form id="loginForm">
                 <div class="form-group">
-                    <label for="email">E-mail</label>
+                    <label for="email">E-mail</label><br>
                     <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
                 </div>
 
@@ -43,12 +58,9 @@
                     <label for="password">Senha</label>
                     <div class="input-container">
                         <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
-                        <button type="button" class="password-toggle" id="togglePassword">
-                            Mostrar
-                        </button>
                     </div>
                     <div class="forgot-password">
-                        <a href="#forgot">Esqueceu sua senha?</a>
+                        <a href="#forgot" id="forgot">Esqueceu sua senha?</a>
                     </div>
                 </div>
 
@@ -56,9 +68,6 @@
                     Entrar
                 </button>
 
-                <div class="divider">
-                    <span>ou</span>
-                </div>
 
                 <p class="signup-link">
                     Não tem uma conta? <a href="#cadastro">Cadastre-se aqui</a>
@@ -66,6 +75,10 @@
             </form>
         </div>
     </main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js" integrity="sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK" crossorigin="anonymous"></script>
 
 </body>
 </html>

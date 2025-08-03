@@ -187,7 +187,7 @@ font-size: 0.8rem;
 }
 
 .toggle-btn:hover {
-background: var(--hover-bg);
+background: #fdb7ff;
 }
 
 .badge {
@@ -351,7 +351,7 @@ margin-top: 1rem;
 }
 
 .submit-btn:hover {
-background: var(--hover-bg);
+background: #fdbbff;
 }
 
 .submit-btn:disabled {
@@ -363,7 +363,6 @@ cursor: not-allowed;
 .success-message {
 display: none;
 background: #dcfce7;
-color: #166534;
 padding: 1rem;
 border-radius: 8px;
 text-align: center;

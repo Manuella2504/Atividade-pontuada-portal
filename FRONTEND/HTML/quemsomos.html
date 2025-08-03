@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quem Somos - RocketLab</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../CSS/quemsomos.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="../JS/quemsomos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Seção de Equipe -->
+        <div class="section">
+            <h1 class="section-title">Nossa Equipe</h1>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="photo-placeholder"></div>
+                    <div class="member-name">Nome do Membro 1</div>
+                    <div class="member-role">Cargo/Função</div>
+                    <div class="member-info">
+                        <div class="info-item">
+                            <span class="info-label">Formação:</span>
+                            <span>Universidade/Curso</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Endereço:</span>
+                            <span>Cidade, Estado</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Especialização:</span>
+                            <span>Área de atuação</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <div class="photo-placeholder"></div>
+                    <div class="member-name">Nome do Membro 2</div>
+                    <div class="member-role">Cargo/Função</div>
+                    <div class="member-info">
+                        <div class="info-item">
+                            <span class="info-label">Formação:</span>
+                            <span>Universidade/Curso</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Endereço:</span>
+                            <span>Cidade, Estado</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Especialização:</span>
+                            <span>Área de atuação</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <div class="photo-placeholder"></div>
+                    <div class="member-name">Nome do Membro 3</div>
+                    <div class="member-role">Cargo/Função</div>
+                    <div class="member-info">
+                        <div class="info-item">
+                            <span class="info-label">Formação:</span>
+                            <span>Universidade/Curso</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Endereço:</span>
+                            <span>Cidade, Estado</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Especialização:</span>
+                            <span>Área de atuação</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <div class="photo-placeholder"></div>
+                    <div class="member-name">Nome do Membro 4</div>
+                    <div class="member-role">Cargo/Função</div>
+                    <div class="member-info">
+                        <div class="info-item">
+                            <span class="info-label">Formação:</span>
+                            <span>Universidade/Curso</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Endereço:</span>
+                            <span>Cidade, Estado</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Especialização:</span>
+                            <span>Área de atuação</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção de Comentários -->
+        <div class="section">
+            <h2 class="section-title">Comentários da Comunidade</h2>
+            <div class="comments-section">
+                <div class="comment-form">
+                    <h3 style="color: #2c3e50; margin-bottom: 20px;">Deixe seu comentário sobre nossa equipe</h3>
+                    <div class="form-group">
+                        <label for="comment-name">Seu Nome</label>
+                        <input type="text" id="comment-name" placeholder="Digite seu nome">
+                    </div>
+                    <div class="form-group">
+                        <label for="comment-email">Seu E-mail</label>
+                        <input type="email" id="comment-email" placeholder="seu@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="comment-text">Seu Comentário</label>
+                        <textarea id="comment-text" rows="4" placeholder="O que achou da nossa equipe? Compartilhe sua experiência..."></textarea>
+                    </div>
+                    <button class="btn" onclick="addComment()">Enviar Comentário</button>
+                </div>
+
+                <div class="comments-list" id="comments-list">
+                    <div class="comment">
+                        <div class="comment-author">Maria Silva</div>
+                        <div class="comment-date">15 de Janeiro, 2025</div>
+                        <div class="comment-text">Equipe muito profissional e dedicada! Ficamos impressionados com a qualidade do trabalho entregue.</div>
+                    </div>
+                    <div class="comment">
+                        <div class="comment-author">João Santos</div>
+                        <div class="comment-date">10 de Janeiro, 2025</div>
+                        <div class="comment-text">Excelente experiência! A equipe é muito atenciosa e entrega resultados de alta qualidade.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção de Projetos -->
+        <div class="section">
+            <h2 class="section-title">Compartilhe Seu Projeto</h2>
+            <div class="project-form">
+                <h3 style="color: #2c3e50; margin-bottom: 20px;">Tem um projeto que se identifica com nosso trabalho?</h3>
+                <div class="form-group">
+                    <label for="project-author">Seu Nome</label>
+                    <input type="text" id="project-author" placeholder="Digite seu nome">
+                </div>
+                <div class="form-group">
+                    <label for="project-title">Título do Projeto</label>
+                    <input type="text" id="project-title" placeholder="Nome do seu projeto">
+                </div>
+                <div class="form-group">
+                    <label for="project-description">Descrição do Projeto</label>
+                    <textarea id="project-description" rows="5" placeholder="Descreva seu projeto, objetivos, e como ele se relaciona com nosso trabalho..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="project-contact">Contato (opcional)</label>
+                    <input type="text" id="project-contact" placeholder="E-mail ou telefone para contato">
+                </div>
+                <button class="btn" onclick="addProject()">Compartilhar Projeto</button>
+            </div>
+
+            <div class="projects-list" id="projects-list">
+                <div class="project">
+                    <div class="project-title">Aplicativo de Sustentabilidade Urbana</div>
+                    <div class="project-author">Por: Ana Costa</div>
+                    <div class="project-description">
+                        Desenvolvimento de um aplicativo mobile para incentivar práticas sustentáveis na cidade, 
+                        conectando cidadãos e promovendo ações ecológicas colaborativas. O projeto visa criar 
+                        uma rede de sustentabilidade local.
+                    </div>
+                </div>
+                <div class="project">
+                    <div class="project-title">Plataforma de Educação Digital</div>
+                    <div class="project-author">Por: Carlos Oliveira</div>
+                    <div class="project-description">
+                        Criação de uma plataforma educacional que utiliza gamificação para tornar o aprendizado 
+                        mais engajante. Focado em democratizar o acesso à educação de qualidade através de 
+                        tecnologias inovadoras.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,204 +1,124 @@
+class LoginValidator {
+    constructor() {
+        this.form = document.getElementById('loginForm');
+        this.emailInput = document.getElementById('email');
+        this.passwordInput = document.getElementById('password');
+        this.loginBtn = document.getElementById('loginBtn');
+        this.loadingSpinner = document.getElementById('loadingSpinner');
+        this.btnText = document.getElementById('btnText');
+        this.alertContainer = document.getElementById('alertContainer');
 
-        class LoginValidator {
-            constructor() {
-                this.form = document.getElementById('loginForm');
-                this.emailInput = document.getElementById('email');
-                this.passwordInput = document.getElementById('password');
-                this.loginBtn = document.getElementById('loginBtn');
-                this.loadingSpinner = document.getElementById('loadingSpinner');
-                this.btnText = document.getElementById('btnText');
-                this.alertContainer = document.getElementById('alertContainer');
-                
-                this.init();
-            }
+        this.init();
+    }
 
-            init() {
-                this.form.addEventListener('submit', (e) => this.handleSubmit(e));
-                this.emailInput.addEventListener('blur', () => this.validateEmail());
-                this.passwordInput.addEventListener('blur', () => this.validatePassword());
-                this.emailInput.addEventListener('input', () => this.clearFieldError('email'));
-                this.passwordInput.addEventListener('input', () => this.clearFieldError('password'));
-            }
+    init() {
+        this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+        // Adiciona validação quando o utilizador sai do campo
+        this.emailInput.addEventListener('blur', () => this.validateEmail());
+        this.passwordInput.addEventListener('blur', () => this.validatePassword());
+    }
 
-            validateEmail() {
-                const email = this.emailInput.value.trim();
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                
-                if (!email) {
-                    this.showFieldError('email', 'E-mail é obrigatório');
-                    return false;
-                }
-                
-                if (!emailRegex.test(email)) {
-                    this.showFieldError('email', 'Digite um e-mail válido');
-                    return false;
-                }
-                
-                this.showFieldSuccess('email');
-                return true;
-            }
+    validateEmail() {
+        const email = this.emailInput.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-            validatePassword() {
-                const password = this.passwordInput.value;
-                
-                if (!password) {
-                    this.showFieldError('password', 'Senha é obrigatória');
-                    return false;
-                }
-                
-                if (password.length < 6) {
-                    this.showFieldError('password', 'Senha deve ter pelo menos 6 caracteres');
-                    return false;
-                }
-                
-                this.showFieldSuccess('password');
-                return true;
-            }
+        if (!email) {
+            // Não mostra erro se estiver vazio, apenas no submit
+            return false;
+        }
+        if (!emailRegex.test(email)) {
+            this.showAlert('Formato de e-mail inválido.');
+            return false;
+        }
+        return true;
+    }
 
-            showFieldError(fieldName, message) {
-                const input = document.getElementById(fieldName);
-                const errorElement = document.getElementById(fieldName + 'Error');
-                
-                input.classList.remove('success');
-                input.classList.add('error');
-                errorElement.textContent = message;
-                errorElement.classList.add('show');
-            }
+    validatePassword() {
+        const password = this.passwordInput.value;
+        if (!password || password.length < 6) {
+            // Não mostra erro se estiver vazio, apenas no submit
+            return false;
+        }
+        return true;
+    }
 
-            showFieldSuccess(fieldName) {
-                const input = document.getElementById(fieldName);
-                const errorElement = document.getElementById(fieldName + 'Error');
-                
-                input.classList.remove('error');
-                input.classList.add('success');
-                errorElement.classList.remove('show');
-            }
+    showAlert(message, type = 'danger') {
+        this.alertContainer.innerHTML = `
+            <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
+    }
 
-            clearFieldError(fieldName) {
-                const input = document.getElementById(fieldName);
-                const errorElement = document.getElementById(fieldName + 'Error');
-                
-                input.classList.remove('error');
-                errorElement.classList.remove('show');
-            }
+    setLoading(isLoading) {
+        if (isLoading) {
+            this.loginBtn.disabled = true;
+            this.loadingSpinner.style.display = 'inline-block';
+            this.btnText.textContent = 'Entrando...';
+        } else {
+            this.loginBtn.disabled = false;
+            this.loadingSpinner.style.display = 'none';
+            this.btnText.textContent = 'Entrar';
+        }
+    }
 
-            showAlert(message, type = 'danger') {
-                const alertHTML = `
-                    <div class="alert alert-${type} alert-dismissible fade show" role="alert">
-                        ${message}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
-                `;
-                this.alertContainer.innerHTML = alertHTML;
-                
-                // Auto remove after 5 seconds
-                setTimeout(() => {
-                    const alert = this.alertContainer.querySelector('.alert');
-                    if (alert) {
-                        const bsAlert = new bootstrap.Alert(alert);
-                        bsAlert.close();
-                    }
-                }, 5000);
-            }
+    async handleSubmit(e) {
+        e.preventDefault();
+        this.alertContainer.innerHTML = ''; // Limpa alertas anteriores
 
-            setLoading(isLoading) {
-                if (isLoading) {
-                    this.loginBtn.disabled = true;
-                    this.loadingSpinner.style.display = 'inline-block';
-                    this.btnText.textContent = 'Entrando...';
-                } else {
-                    this.loginBtn.disabled = false;
-                    this.loadingSpinner.style.display = 'none';
-                    this.btnText.textContent = 'Entrar';
-                }
-            }
+        const email = this.emailInput.value.trim();
+        const password = this.passwordInput.value;
 
-            async handleSubmit(e) {
-                e.preventDefault();
-                
-                // Clear previous alerts
-                this.alertContainer.innerHTML = '';
-                
-                const emailValid = this.validateEmail();
-                const passwordValid = this.validatePassword();
-                
-                if (!emailValid || !passwordValid) {
-                    this.showAlert('Por favor, corrija os erros nos campos destacados.');
-                    return;
-                }
-                
-                this.setLoading(true);
-                
-                try {
-                    // Simular requisição de login
-                    await this.simulateLogin();
-                    
-                    // Sucesso
-                    this.showAlert('Login realizado com sucesso! Redirecionando...', 'success');
-                    
-                    // Simular redirecionamento após 2 segundos
-                    setTimeout(() => {
-                        // window.location.href = 'dashboard.html';
-                        console.log('Redirecionando para o dashboard...');
-                    }, 2000);
-                    
-                } catch (error) {
-                    this.showAlert(error.message);
-                } finally {
-                    this.setLoading(false);
-                }
-            }
-
-            async simulateLogin() {
-                // Simular delay de rede
-                await new Promise(resolve => setTimeout(resolve, 1500));
-                
-                const email = this.emailInput.value.trim();
-                const password = this.passwordInput.value;
-                
-                // Simular validação no servidor
-                if (email === 'admin@portal.com' && password === '123456') {
-                    return { success: true };
-                } else {
-                    throw new Error('E-mail ou senha incorretos. Tente novamente.');
-                }
-            }
+        // Validação final no momento do submit
+        if (!email || !password) {
+            this.showAlert('Por favor, preencha o e-mail e a senha.');
+            return;
+        }
+        if (password.length < 6) {
+            this.showAlert('A senha deve ter pelo menos 6 caracteres.');
+            return;
+        }
+        if (!this.validateEmail()) {
+             this.showAlert('O formato do e-mail é inválido.');
+             return;
         }
 
-        // Inicializar quando o DOM estiver carregado
-        document.addEventListener('DOMContentLoaded', () => {
-            new LoginValidator();
-        });
+        this.setLoading(true);
 
-        // Adicionar animação suave aos elementos
-        document.addEventListener('DOMContentLoaded', () => {
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, observerOptions);
-
-            // Animar elementos da ilustração
-            document.querySelectorAll('.illustration-container > *').forEach((el, index) => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(30px)';
-                el.style.transition = `all 0.6s ease ${index * 0.2}s`;
-                observer.observe(el);
+        try {
+            const response = await fetch('http://localhost:3000/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email,
+                    password
+                })
             });
 
-            // Animar elementos do formulário
-            document.querySelectorAll('.login-side > *').forEach((el, index) => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(20px)';
-                el.style.transition = `all 0.5s ease ${index * 0.1}s`;
-                observer.observe(el);
-            });
-        });
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'E-mail ou senha incorretos.');
+            }
+
+            this.showAlert('Login realizado com sucesso! A redirecionar...', 'success');
+            localStorage.setItem('supabase.session', JSON.stringify(data.session));
+
+            setTimeout(() => {
+                window.location.href = 'perfil.html';
+            }, 1500);
+
+        } catch (error) {
+            this.showAlert(error.message);
+        } finally {
+            this.setLoading(false);
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    new LoginValidator();
+});

@@ -384,12 +384,47 @@
         });
 
         document.getElementById('form6').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Simular envio dos dados
-            setTimeout(() => {
-                showSuccessModal();
-            }, 1000);
-        });
+    e.preventDefault();
+
+    const registrationData = {
+        email: document.getElementById('email').value,
+        password: document.getElementById('senha').value,
+        primeiroNome: document.getElementById('primeiroNome').value,
+        sobrenome: document.getElementById('sobrenome').value,
+        dataNascimento: document.getElementById('dataNascimento').value,
+        paisNascimento: document.getElementById('paisNascimento').value,
+        cpf: document.getElementById('cpf').value.replace(/[^\d]/g, '')
+    };
+
+    fetch('http://localhost:3000/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(registrationData),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert(`Erro no cadastro: ${data.error}`);
+        } else {
+            showSuccessModal();
+        }
+    })
+    .catch(error => {
+        alert('Erro de conexão. Não foi possível completar o cadastro.');
+    });
+});
+
+
+function showSuccessModal() {
+    document.getElementById(`step${totalSteps}`).classList.add('hidden');
+    const successModal = document.getElementById('successModal');
+    successModal.classList.remove('hidden');
+
+    const concluirBtn = successModal.querySelector('.btn-primary');
+    concluirBtn.onclick = function() {
+        window.location.href = 'login.html';
+    };
+}
 
         // Event listeners para mostrar/ocultar campos de atuação profissional
         document.querySelectorAll('input[name="atuacao"]').forEach(radio => {

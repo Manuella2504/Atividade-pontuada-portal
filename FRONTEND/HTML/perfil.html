@@ -6,15 +6,17 @@
     <title>Perfil Acadêmico - RocketLab</title>
     <link rel="stylesheet" href="../CSS/perfil.css">
     <script src="../JS/perfil.js" defer></script>
+    <script src="../JS/shared.js" defer></script>
+    <link rel="stylesheet" href="header.css">
     <link rel="shortcut icon" href="../IMAGENS/Logo roxa.png" type="image/x-icon">
 </head>
-<body>
+<body data-protected-route>
     <div class="container">
-        <header class="header">
-            <div class="profile-photo" id="profilePhoto">+</div>
-            <h1 id="userName">Seu Nome</h1>
-            <p class="subtitle" id="userTitle">Seu Título Profissional</p>
-        </header>
+        <div class="header">
+            <div class="profile-photo" id="profilePhoto"></div>
+            <h1 id="userName">Nome do Utilizador</h1>
+            <p class="subtitle" id="userTitle">Título do Utilizador</p>
+        </div>
 
         <div class="main-content">
             <aside class="sidebar">

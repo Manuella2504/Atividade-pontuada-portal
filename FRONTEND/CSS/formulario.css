@@ -126,7 +126,7 @@ white-space: nowrap;
 }
 
 .nav-link:hover {
-color: var(--text-light);
+color: #fdbaff;
 }
 
 .nav-link.active {

@@ -188,6 +188,7 @@ font-size: 0.8rem;
 
 .toggle-btn:hover {
 background: #fdb7ff;
+color: #fdbaff;
 }
 
 .badge {
@@ -352,6 +353,7 @@ margin-top: 1rem;
 
 .submit-btn:hover {
 background: #fdbbff;
+color: #fdbaff;
 }
 
 .submit-btn:disabled {

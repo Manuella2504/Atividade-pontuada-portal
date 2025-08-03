@@ -77,6 +77,9 @@ text-align: center;
 color: white;
 z-index: 2;
 }
+#imagem-lateral{
+width: 250px;
+}
 
 .illustration-icon {
 font-size: 120px;

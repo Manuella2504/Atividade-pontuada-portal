@@ -1,4 +1,5 @@
-
+@import url("https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap");
 
 * {
 margin: 0;
@@ -399,4 +400,139 @@ padding: 1.5rem;
 .form-title {
 font-size: 1.5rem;
 }
+}
+
+/* Responsividade da Barra lateral */
+
+/* MEDIA QUERIES PARA SIDEBAR MOBILE */
+
+/* Tablets pequenos (768px e abaixo) */
+@media (max-width: 768px) {
+    /* Sidebar bem compacta, apenas faixa com ícones */
+    .sidebar {
+        width: 50px;
+    }
+
+    .sidebar-header {
+        padding: 0.8rem 0.2rem;
+        justify-content: center;
+    }
+
+    .sidebar-header .brand-text {
+        display: none;
+    }
+
+    .sidebar-nav {
+        padding: 0.5rem 0;
+    }
+
+    .nav-item {
+        margin: 0.1rem 0.2rem;
+    }
+
+    .nav-link {
+        padding: 8px 4px;
+        justify-content: center;
+        gap: 0;
+    }
+
+    .nav-link i {
+        margin: 0;
+        font-size: 0.9rem;
+    }
+
+    .nav-text,
+    .badge,
+    .nav-section-title {
+        display: none;
+    }
+
+    .user-profile {
+        padding: 0.6rem 0.2rem;
+        justify-content: center;
+    }
+
+    .user-info {
+        display: none;
+    }
+
+    .user-avatar {
+        width: 30px;
+        height: 30px;
+        font-size: 0.8rem;
+    }
+
+    .main-content {
+        margin-left: 50px;
+        width: calc(100vw - 50px);
+    }
+}
+
+/* Smartphones (480px e abaixo) */
+@media (max-width: 480px) {
+    /* Sidebar ainda mais fina */
+    .sidebar {
+        width: 45px;
+    }
+
+    .sidebar-header {
+        padding: 0.6rem 0.1rem;
+    }
+
+    .nav-link {
+        padding: 6px 2px;
+    }
+
+    .nav-link i {
+        font-size: 0.8rem;
+    }
+
+    .user-profile {
+        padding: 0.5rem 0.1rem;
+    }
+
+    .user-avatar {
+        width: 28px;
+        height: 28px;
+        font-size: 0.7rem;
+    }
+
+    .main-content {
+        margin-left: 45px;
+        width: calc(100vw - 45px);
+    }
+}
+
+/* Smartphones muito pequenos (360px e abaixo) */
+@media (max-width: 360px) {
+    .sidebar {
+        width: 40px;
+    }
+
+    .sidebar-header {
+        padding: 0.5rem 0.1rem;
+    }
+
+    .nav-link {
+        padding: 5px 1px;
+    }
+
+    .nav-link i {
+        font-size: 0.75rem;
+    }
+
+    .user-profile {
+        padding: 0.4rem 0.1rem;
+    }
+
+    .user-avatar {
+        width: 25px;
+        height: 25px;
+        font-size: 0.65rem;
+    }
+
+    .main-content {
+        margin-left: 40px;
+        width: calc(100vw - 40px);
+    }
 }

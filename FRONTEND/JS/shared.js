@@ -65,7 +65,7 @@ function renderHeader(session) {
                 <a class="nav-link ${currentPath === 'cadastro.html' ? 'active' : ''}" href="cadastro.html">Cadastre-se</a>
             </li>
              <li class="nav-item">
-                <a class="nav-link ${currentPath === 'quemsomos.html' ? 'active' : ''}" href="quemsomos.html">Quem Somos</a>
+                <a class="nav-link ${currentPath === 'telainicial.html' ? 'active' : ''}" href="telainicial.html">Inicio</a>
             </li>
         `;
     }

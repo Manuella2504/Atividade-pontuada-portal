@@ -1,161 +1,248 @@
-// Atividade-pontuada-portal/FRONTEND/JS/perfil.js
+document.addEventListener("DOMContentLoaded", () => {
+    // --- ELEMENTOS GLOBAIS ---
+    const sidebar = document.getElementById("sidebar");
+    const navLinks = document.querySelectorAll(".sidebar-nav .nav-link");
+    const modal = document.getElementById("editModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalForm = document.getElementById("modalForm");
+    const closeModalBtn = document.querySelector(".modal .close");
 
-const API_URL = 'http://localhost:3000/api';
-let userData = {};
-let currentSection = '';
+    // --- VARIÁVEIS DE ESTADO ---
+    let profileData = {};
+    let currentEditingSection = null;
 
-const getSession = () => JSON.parse(localStorage.getItem('supabase.session'));
-
-async function loadProfileData() {
-    const sessionData = getSession();
-    if (!sessionData) return;
-
-    try {
-        const response = await fetch(`${API_URL}/profile`, {
-            headers: { 'Authorization': `Bearer ${sessionData.access_token}` }
-        });
-        if (!response.ok) throw new Error('Falha ao buscar dados.');
-        userData = await response.json();
-        renderProfile();
-    } catch (error) {
-        console.error('Erro:', error);
-    }
-}
-
-document.addEventListener('DOMContentLoaded', loadProfileData);
-
-function renderProfile() {
-    const { personalInfo, languages, education, experience } = userData;
-    const nomeCompleto = `${personalInfo.primeiro_nome || ''} ${personalInfo.sobrenome || ''}`.trim();
-    
-    document.getElementById('userName').textContent = nomeCompleto || 'Nome não preenchido';
-    document.getElementById('userTitle').textContent = 'Pesquisador';
-    document.getElementById('profilePhoto').textContent = nomeCompleto ? nomeCompleto.charAt(0).toUpperCase() : '+';
-
-    const contactInfo = document.getElementById('contactInfo');
-    contactInfo.innerHTML = (personalInfo.email || personalInfo.celular)
-        ? `${personalInfo.email ? `<div class="info-item"><span>📧</span> ${personalInfo.email}</div>` : ''}
-           ${personalInfo.celular ? `<div class="info-item"><span>📱</span> ${personalInfo.celular}</div>` : ''}`
-        : '<div class="empty-state">Adicione suas informações.</div>';
-
-    const educationArea = document.getElementById('educationArea');
-    educationArea.innerHTML = education.length > 0
-        ? education.map(edu => `<div class="education-item"><div class="item-title">${edu.curso}</div><div class="item-institution">${edu.instituicao}</div><div class="item-period">${edu.ano_inicio} - ${edu.ano_conclusao || 'Presente'}</div></div>`).join('')
-        : '<div class="empty-state">Adicione sua formação acadêmica.</div>';
-
-    const experienceArea = document.getElementById('experienceArea');
-    experienceArea.innerHTML = experience.length > 0
-        ? experience.map(exp => `<div class="experience-item"><div class="item-title">${exp.cargo}</div><div class="item-institution">${exp.instituicao}</div><div class="item-period">${exp.ano_inicio} - ${exp.ano_fim || 'Presente'}</div></div>`).join('')
-        : '<div class="empty-state">Adicione sua experiência profissional.</div>';
-
-    const languagesArea = document.getElementById('languagesArea');
-    languagesArea.innerHTML = languages.length > 0
-        ? languages.map(lang => `<div class="info-item"><span>🌐</span> ${lang.idioma} (Leitura: ${lang.le})</div>`).join('')
-        : '<div class="empty-state">Adicione seus idiomas.</div>';
-}
-
-function editSection(section) {
-    currentSection = section;
-    const modal = document.getElementById('editModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalForm = document.getElementById('modalForm');
-
-    modal.style.display = 'block';
-    modalTitle.textContent = `Editar ${section.replace('-', ' ')}`;
-    
-    let formHTML = '';
-    switch(section) {
-        case 'info-pessoais': formHTML = getPersonalInfoForm(); break;
-        case 'formacao': formHTML = getEditableListForm('formacao', userData.education, ['curso', 'instituicao', 'ano_inicio', 'ano_conclusao']); break;
-        case 'experiencia': formHTML = getEditableListForm('experiencia', userData.experience, ['cargo', 'instituicao', 'ano_inicio', 'ano_fim']); break;
-        case 'idiomas': formHTML = getEditableListForm('idiomas', userData.languages, ['idioma', 'le', 'fala', 'escreve']); break;
-    }
-    modalForm.innerHTML = formHTML;
-}
-
-function getPersonalInfoForm() {
-    const { personalInfo } = userData;
-    return `
-        <div class="form-group"><label>Primeiro Nome:</label><input type="text" id="edit-primeiro_nome" value="${personalInfo.primeiro_nome || ''}"></div>
-        <div class="form-group"><label>Sobrenome:</label><input type="text" id="edit-sobrenome" value="${personalInfo.sobrenome || ''}"></div>
-        <div class="form-group"><label>Celular:</label><input type="text" id="edit-celular" value="${personalInfo.celular || ''}"></div>
-    `;
-}
-
-function getEditableListForm(type, items, fields) {
-    let listHTML = items.map(item => `
-        <div class="editable-item">
-            <span>${item[fields[0]]} - ${item[fields[1]]}</span>
-            <button class="remove-btn" onclick="removeItem('${type}', '${item.id}')">×</button>
-        </div>`).join('');
-
-    let inputsHTML = fields.map(field => `
-        <div class="form-group">
-            <label>${field.replace('_', ' ')}:</label>
-            <input type="text" id="add-${type}-${field}" placeholder="${field.includes('ano_') ? 'Deixe em branco se for atual' : ''}">
-        </div>`).join('');
-
-    return `<h4>Itens Atuais:</h4><div class="editable-list">${listHTML || '<p>Nenhum item.</p>'}</div><hr><h4>Adicionar Novo:</h4>${inputsHTML}<button class="add-btn" onclick="addItem('${type}', ${JSON.stringify(fields).replace(/"/g, "'")})">Adicionar</button>`;
-}
-
-async function saveChanges() {
-    if (currentSection !== 'info-pessoais') {
-        closeModal();
-        return;
-    }
-    const payload = {
-        primeiro_nome: document.getElementById('edit-primeiro_nome').value,
-        sobrenome: document.getElementById('edit-sobrenome').value,
-        celular: document.getElementById('edit-celular').value,
+    // --- DADOS PADRÃO (USADOS SE NENHUM DADO FOR ENCONTRADO) ---
+    const defaultData = {
+        infoPessoais: {
+            nome: "Usuário Teste",
+            titulo: "Estudante de Engenharia de Software",
+            foto: "U",
+            email: "usuario@rocketlab.com",
+            telefone: "(71) 99999-9999",
+            localizacao: "Salvador, Bahia",
+            lattes: "http://lattes.cnpq.br/exemplo"
+        },
+        idiomas: [
+            { id: 1, idioma: "Português", nivel: "Nativo" },
+            { id: 2, idioma: "Inglês", nivel: "Avançado" }
+        ],
+        formacao: [
+            { id: 1, curso: "Análise e Desenvolvimento de Sistemas", instituicao: "Universidade Federal da Bahia", inicio: "2022", fim: "2025" }
+        ],
+        experiencia: [
+            { id: 1, cargo: "Estagiário de Desenvolvimento Front-End", empresa: "RocketLab", inicio: "2024", fim: "Atual", descricao: "Desenvolvimento e manutenção de interfaces de usuário para projetos acadêmicos inovadores." }
+        ]
     };
-    await apiCall('put', '/profile/info', payload);
-    await loadProfileData();
-    closeModal();
-}
 
-async function addItem(type, fields) {
-    const payload = {}; // user_id será adicionado no backend
-    fields.forEach(field => {
-        payload[field] = document.getElementById(`add-${type}-${field}`).value;
-    });
+    // --- FUNÇÕES DE DADOS (localStorage) ---
+    const loadProfileData = () => {
+        const data = localStorage.getItem('userProfileData');
+        profileData = data ? JSON.parse(data) : JSON.parse(JSON.stringify(defaultData)); // Usa dados padrão se não houver salvos
+    };
 
-    // A 'tableName' agora é o próprio 'type'
-    await apiCall('post', `/profile/${type}`, payload);
-    await loadProfileData();
-    editSection(type);
-}
+    const saveProfileData = () => {
+        localStorage.setItem('userProfileData', JSON.stringify(profileData));
+    };
 
-async function removeItem(type, id) {
-    if (!confirm('Tem certeza?')) return;
-    // A 'tableName' agora é o próprio 'type'
-    await apiCall('delete', `/profile/${type}/${id}`);
-    await loadProfileData();
-    editSection(type);
-}
+    // --- FUNÇÕES DE RENDERIZAÇÃO (Exibir dados na página) ---
+    const renderAll = () => {
+        renderInfoPessoais();
+        renderIdiomas();
+        renderFormacao();
+        renderExperiencia();
+        loadSidebarUserInfo(); // Atualiza também a sidebar
+    };
+    
+    const renderInfoPessoais = () => {
+        const info = profileData.infoPessoais;
+        document.getElementById("profilePhoto").textContent = info.foto || info.nome.charAt(0).toUpperCase();
+        document.getElementById("userName").textContent = info.nome;
+        document.getElementById("userTitle").textContent = info.titulo;
+        
+        const contactInfo = document.getElementById("contactInfo");
+        contactInfo.innerHTML = `
+            <div class="info-item"><div class="info-icon"><i class="fas fa-envelope"></i></div> ${info.email}</div>
+            <div class="info-item"><div class="info-icon"><i class="fas fa-phone"></i></div> ${info.telefone}</div>
+            <div class="info-item"><div class="info-icon"><i class="fas fa-map-marker-alt"></i></div> ${info.localizacao}</div>
+        `;
 
-async function apiCall(method, endpoint, body) {
-    const sessionData = getSession();
-    if (!sessionData) return;
-    try {
-        const response = await fetch(API_URL + endpoint, {
-            method: method.toUpperCase(),
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionData.access_token}` },
-            body: body ? JSON.stringify(body) : undefined
-        });
-        if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.error || 'Falha na operação');
+        const lattesLink = document.getElementById("lattesLink");
+        if(info.lattes) {
+            lattesLink.href = info.lattes;
+            lattesLink.style.display = 'block';
+        } else {
+            lattesLink.style.display = 'none';
         }
-        return await response.json();
-    } catch (error) {
-        alert(error.message);
-    }
-}
+    };
 
-function closeModal() {
-    document.getElementById('editModal').style.display = 'none';
-}
-document.addEventListener('click', (event) => {
-    if (event.target.classList.contains('close')) closeModal();
-    if (event.target.classList.contains('modal')) closeModal();
+    const renderIdiomas = () => {
+        const container = document.getElementById("languagesArea");
+        if (profileData.idiomas.length === 0) {
+            container.innerHTML = `<div class="empty-state">Adicione os idiomas que você domina</div>`;
+            return;
+        }
+        container.innerHTML = profileData.idiomas.map(lang => `
+            <div class="info-item">${lang.idioma} - <strong>${lang.nivel}</strong></div>
+        `).join('');
+    };
+
+    const renderFormacao = () => {
+        const container = document.getElementById("educationArea");
+        if (profileData.formacao.length === 0) {
+            container.innerHTML = `<div class="empty-state">Adicione sua formação acadêmica</div>`;
+            return;
+        }
+        container.innerHTML = profileData.formacao.map(edu => `
+            <div class="education-item">
+                <div class="item-title">${edu.curso}</div>
+                <div class="item-institution">${edu.instituicao}</div>
+                <div class="item-period">${edu.inicio} - ${edu.fim}</div>
+            </div>
+        `).join('');
+    };
+
+    const renderExperiencia = () => {
+        const container = document.getElementById("experienceArea");
+        if (profileData.experiencia.length === 0) {
+            container.innerHTML = `<div class="empty-state">Adicione sua experiência profissional</div>`;
+            return;
+        }
+        container.innerHTML = profileData.experiencia.map(exp => `
+            <div class="experience-item">
+                <div class="item-title">${exp.cargo}</div>
+                <div class="item-institution">${exp.empresa}</div>
+                <div class="item-period">${exp.inicio} - ${exp.fim}</div>
+                <p>${exp.descricao}</p>
+            </div>
+        `).join('');
+    };
+
+    // --- LÓGICA DO MODAL DE EDIÇÃO ---
+    window.openModal = () => { modal.style.display = 'block'; };
+    window.closeModal = () => { modal.style.display = 'none'; modalForm.innerHTML = ''; };
+    closeModalBtn.onclick = closeModal;
+    window.onclick = (event) => { if (event.target == modal) closeModal(); };
+
+    window.editSection = (sectionName) => {
+        currentEditingSection = sectionName;
+        modalTitle.textContent = `Editar ${sectionName.replace('-', ' ')}`;
+        let formHtml = '';
+
+        switch (sectionName) {
+            case 'info-pessoais':
+                const info = profileData.infoPessoais;
+                formHtml = `
+                    <div class="form-group"><label>Nome Completo</label><input type="text" id="edit-nome" value="${info.nome}"></div>
+                    <div class="form-group"><label>Título (Ex: Estudante de...)</label><input type="text" id="edit-titulo" value="${info.titulo}"></div>
+                    <div class="form-group"><label>E-mail</label><input type="email" id="edit-email" value="${info.email}"></div>
+                    <div class="form-group"><label>Telefone</label><input type="tel" id="edit-telefone" value="${info.telefone}"></div>
+                    <div class="form-group"><label>Localização</label><input type="text" id="edit-localizacao" value="${info.localizacao}"></div>
+                    <div class="form-group"><label>Link do Currículo Lattes</label><input type="url" id="edit-lattes" value="${info.lattes}"></div>
+                `;
+                break;
+            case 'idiomas':
+                 formHtml = profileData.idiomas.map((lang, index) => `
+                    <div class="item-form" data-index="${index}">
+                        <input type="text" value="${lang.idioma}" placeholder="Idioma">
+                        <input type="text" value="${lang.nivel}" placeholder="Nível">
+                        <button onclick="removeItem('idiomas', ${index})">&times;</button>
+                    </div>
+                `).join('') + '<button class="add-btn" onclick="addItem(\'idiomas\')">+ Adicionar Idioma</button>';
+                break;
+            case 'formacao':
+                 formHtml = profileData.formacao.map((edu, index) => `
+                    <div class="item-form" data-index="${index}">
+                         <input type="text" value="${edu.curso}" placeholder="Curso">
+                         <input type="text" value="${edu.instituicao}" placeholder="Instituição">
+                         <input type="text" value="${edu.inicio}" placeholder="Ano de Início">
+                         <input type="text" value="${edu.fim}" placeholder="Ano de Conclusão">
+                         <button onclick="removeItem('formacao', ${index})">&times;</button>
+                    </div>
+                `).join('') + '<button class="add-btn" onclick="addItem(\'formacao\')">+ Adicionar Formação</button>';
+                break;
+            case 'experiencia':
+                formHtml = profileData.experiencia.map((exp, index) => `
+                    <div class="item-form" data-index="${index}">
+                        <input type="text" value="${exp.cargo}" placeholder="Cargo">
+                        <input type="text" value="${exp.empresa}" placeholder="Empresa">
+                        <input type="text" value="${exp.inicio}" placeholder="Início">
+                        <input type="text" value="${exp.fim}" placeholder="Fim">
+                        <textarea placeholder="Descrição">${exp.descricao}</textarea>
+                        <button onclick="removeItem('experiencia', ${index})">&times;</button>
+                    </div>
+                `).join('') + '<button class="add-btn" onclick="addItem(\'experiencia\')">+ Adicionar Experiência</button>';
+                break;
+        }
+        modalForm.innerHTML = formHtml;
+        openModal();
+    };
+
+    window.saveChanges = () => {
+        switch (currentEditingSection) {
+            case 'info-pessoais':
+                profileData.infoPessoais = {
+                    nome: document.getElementById('edit-nome').value,
+                    titulo: document.getElementById('edit-titulo').value,
+                    foto: document.getElementById('edit-nome').value.charAt(0).toUpperCase(),
+                    email: document.getElementById('edit-email').value,
+                    telefone: document.getElementById('edit-telefone').value,
+                    localizacao: document.getElementById('edit-localizacao').value,
+                    lattes: document.getElementById('edit-lattes').value,
+                };
+                break;
+            // Para seções com múltiplos itens
+            default:
+                const items = [];
+                const itemForms = modalForm.querySelectorAll('.item-form');
+                itemForms.forEach(form => {
+                    const inputs = form.querySelectorAll('input, textarea');
+                    let itemData = {};
+                    if(currentEditingSection === 'idiomas') itemData = {idioma: inputs[0].value, nivel: inputs[1].value};
+                    if(currentEditingSection === 'formacao') itemData = {curso: inputs[0].value, instituicao: inputs[1].value, inicio: inputs[2].value, fim: inputs[3].value};
+                    if(currentEditingSection === 'experiencia') itemData = {cargo: inputs[0].value, empresa: inputs[1].value, inicio: inputs[2].value, fim: inputs[3].value, descricao: inputs[4].value};
+                    items.push(itemData);
+                });
+                profileData[currentEditingSection] = items;
+                break;
+        }
+
+        saveProfileData();
+        renderAll();
+        closeModal();
+    };
+    
+    // Funções para adicionar/remover itens dinamicamente no modal (precisam estar no escopo global)
+    window.addItem = (section) => { /* lógica para adicionar campos vazios no modal */ };
+    window.removeItem = (section, index) => { /* lógica para remover um item e re-renderizar o form do modal */ };
+
+
+    // --- LÓGICA DA SIDEBAR ---
+    const setActiveLink = () => {
+        const currentPage = window.location.pathname.split('/').pop();
+        navLinks.forEach(link => {
+            if (link.getAttribute("href") === currentPage) {
+                link.classList.add("active");
+            }
+        });
+    };
+
+    const loadSidebarUserInfo = () => {
+        const userNameElement = document.getElementById('sidebarUserName');
+        const userAvatarElement = document.getElementById('userAvatar');
+        const loggedInUserName = localStorage.getItem('userName') || profileData.infoPessoais.nome;
+
+        if (loggedInUserName) {
+            userNameElement.textContent = loggedInUserName;
+            userAvatarElement.textContent = loggedInUserName.charAt(0).toUpperCase();
+        }
+    };
+
+    window.toggleSidebarMobile = () => {
+        sidebar.classList.toggle('show');
+    };
+
+    // --- INICIALIZAÇÃO ---
+    loadProfileData();
+    renderAll();
+    setActiveLink();
 });

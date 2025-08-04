@@ -1,124 +1,159 @@
-class LoginValidator {
-    constructor() {
-        this.form = document.getElementById('loginForm');
-        this.emailInput = document.getElementById('email');
-        this.passwordInput = document.getElementById('password');
-        this.loginBtn = document.getElementById('loginBtn');
-        this.loadingSpinner = document.getElementById('loadingSpinner');
-        this.btnText = document.getElementById('btnText');
-        this.alertContainer = document.getElementById('alertContainer');
+document.addEventListener("DOMContentLoaded", () => {
+    // --- SELETORES DE ELEMENTOS ---
+    const loginForm = document.getElementById("loginForm");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const loginBtn = document.getElementById("loginBtn");
+    const loadingSpinner = document.getElementById("loadingSpinner");
+    const btnText = document.getElementById("btnText");
+    const alertContainer = document.getElementById("alertContainer");
+    const forgotPasswordLink = document.getElementById('forgot');
 
-        this.init();
-    }
+    // --- FUNÇÕES AUXILIARES ---
 
-    init() {
-        this.form.addEventListener('submit', (e) => this.handleSubmit(e));
-        // Adiciona validação quando o utilizador sai do campo
-        this.emailInput.addEventListener('blur', () => this.validateEmail());
-        this.passwordInput.addEventListener('blur', () => this.validatePassword());
-    }
+    /**
+     * Valida se um e-mail possui um formato válido.
+     * @param {string} email O e-mail a ser validado.
+     * @returns {boolean}
+     */
+    const isValidEmail = (email) => {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(String(email).toLowerCase());
+    };
 
-    validateEmail() {
-        const email = this.emailInput.value.trim();
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (!email) {
-            // Não mostra erro se estiver vazio, apenas no submit
-            return false;
+    /**
+     * Mostra uma mensagem de erro para um campo do formulário.
+     * @param {HTMLInputElement} inputElement - O elemento input.
+     * @param {string} message - A mensagem de erro.
+     */
+    const showError = (inputElement, message) => {
+        const errorDiv = document.getElementById(`${inputElement.id}Error`);
+        inputElement.classList.add('error');
+        inputElement.classList.remove('success');
+        if (errorDiv) {
+            errorDiv.textContent = message;
+            errorDiv.classList.add('show');
         }
-        if (!emailRegex.test(email)) {
-            this.showAlert('Formato de e-mail inválido.');
-            return false;
-        }
-        return true;
-    }
+    };
 
-    validatePassword() {
-        const password = this.passwordInput.value;
-        if (!password || password.length < 6) {
-            // Não mostra erro se estiver vazio, apenas no submit
-            return false;
+    /**
+     * Limpa a mensagem de erro de um campo.
+     * @param {HTMLInputElement} inputElement - O elemento input.
+     */
+    const clearError = (inputElement) => {
+        const errorDiv = document.getElementById(`${inputElement.id}Error`);
+        inputElement.classList.remove('error');
+        if (errorDiv) {
+            errorDiv.classList.remove('show');
         }
-        return true;
-    }
-
-    showAlert(message, type = 'danger') {
-        this.alertContainer.innerHTML = `
-            <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+    };
+    
+    /**
+     * Mostra um alerta (Bootstrap) no topo do formulário.
+     * @param {string} message - A mensagem do alerta.
+     * @param {string} type - O tipo do alerta ('success', 'danger', 'warning').
+     */
+    const showAlert = (message, type = 'danger') => {
+        alertContainer.innerHTML = `
+            <div class="alert alert-${type}" role="alert">
                 ${message}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         `;
-    }
+    };
 
-    setLoading(isLoading) {
-        if (isLoading) {
-            this.loginBtn.disabled = true;
-            this.loadingSpinner.style.display = 'inline-block';
-            this.btnText.textContent = 'Entrando...';
+    // --- VALIDAÇÃO DO FORMULÁRIO ---
+
+    const validateForm = () => {
+        let isValid = true;
+
+        // Limpa erros anteriores
+        clearError(emailInput);
+        clearError(passwordInput);
+
+        // Validação do E-mail
+        if (emailInput.value.trim() === "") {
+            showError(emailInput, "O campo e-mail é obrigatório.");
+            isValid = false;
+        } else if (!isValidEmail(emailInput.value)) {
+            showError(emailInput, "Por favor, insira um e-mail válido.");
+            isValid = false;
         } else {
-            this.loginBtn.disabled = false;
-            this.loadingSpinner.style.display = 'none';
-            this.btnText.textContent = 'Entrar';
+            emailInput.classList.add('success');
         }
-    }
 
-    async handleSubmit(e) {
+        // Validação da Senha
+        if (passwordInput.value.trim() === "") {
+            showError(passwordInput, "O campo senha é obrigatório.");
+            isValid = false;
+        } else if (passwordInput.value.length < 6) {
+            showError(passwordInput, "A senha deve ter pelo menos 6 caracteres.");
+            isValid = false;
+        } else {
+            passwordInput.classList.add('success');
+        }
+
+        return isValid;
+    };
+    
+    // Limpa erros em tempo real enquanto o usuário digita
+    emailInput.addEventListener('input', () => clearError(emailInput));
+    passwordInput.addEventListener('input', () => clearError(passwordInput));
+
+
+    // --- LÓGICA DE SUBMISSÃO E LOGIN ---
+
+    loginForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        this.alertContainer.innerHTML = ''; // Limpa alertas anteriores
+        alertContainer.innerHTML = ''; // Limpa alertas antigos
 
-        const email = this.emailInput.value.trim();
-        const password = this.passwordInput.value;
-
-        // Validação final no momento do submit
-        if (!email || !password) {
-            this.showAlert('Por favor, preencha o e-mail e a senha.');
+        if (!validateForm()) {
             return;
         }
-        if (password.length < 6) {
-            this.showAlert('A senha deve ter pelo menos 6 caracteres.');
-            return;
-        }
-        if (!this.validateEmail()) {
-             this.showAlert('O formato do e-mail é inválido.');
-             return;
-        }
 
-        this.setLoading(true);
+        // Ativa o estado de carregamento do botão
+        loginBtn.disabled = true;
+        loadingSpinner.style.display = 'inline-block';
+        btnText.textContent = 'Entrando...';
 
-        try {
-            const response = await fetch('http://localhost:3000/api/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    email,
-                    password
-                })
-            });
+        // Simula uma chamada de API com 2 segundos de atraso
+        setTimeout(() => {
+            // DADOS FICTÍCIOS PARA SIMULAÇÃO
+            const dummyEmail = "usuario@rocketlab.com";
+            const dummyPassword = "password123";
+            const dummyUserName = "Usuário Teste";
 
-            const data = await response.json();
+            if (emailInput.value === dummyEmail && passwordInput.value === dummyPassword) {
+                // SUCESSO NO LOGIN
+                showAlert('Login realizado com sucesso! Redirecionando...', 'success');
+                
+                // Salva o nome do usuário no localStorage para usar em outras páginas
+                localStorage.setItem('userName', dummyUserName);
 
-            if (!response.ok) {
-                throw new Error(data.error || 'E-mail ou senha incorretos.');
+                // Redireciona para a página principal após um pequeno atraso
+                setTimeout(() => {
+                    window.location.href = 'iniciodepois.html';
+                }, 1500);
+
+            } else {
+                // FALHA NO LOGIN
+                showAlert('E-mail ou senha incorretos. Por favor, tente novamente.', 'danger');
+                
+                // Reseta o botão para o estado normal
+                loginBtn.disabled = false;
+                loadingSpinner.style.display = 'none';
+                btnText.textContent = 'Entrar';
+                passwordInput.value = ""; // Limpa a senha por segurança
+                passwordInput.classList.remove('success', 'error');
             }
 
-            this.showAlert('Login realizado com sucesso! A redirecionar...', 'success');
-            localStorage.setItem('supabase.session', JSON.stringify(data.session));
+        }, 2000);
+    });
+    
+    // --- LINK "ESQUECEU A SENHA" ---
+    
+    forgotPasswordLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        alert('Funcionalidade de recuperação de senha ainda não implementada.');
+    });
 
-            setTimeout(() => {
-                window.location.href = 'perfil.html';
-            }, 1500);
-
-        } catch (error) {
-            this.showAlert(error.message);
-        } finally {
-            this.setLoading(false);
-        }
-    }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    new LoginValidator();
 });

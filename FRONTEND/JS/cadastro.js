@@ -32,8 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
     avisoEndereco: document.getElementById("avisoEndereco"),
   };
 
-  // --- FUNÇÕES DE NAVEGAÇÃO E UI ---
-
   /**
    * Atualiza a barra de progresso visual (linha e círculos).
    */
@@ -58,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /**
    * Mostra a etapa do formulário especificada e esconde as outras.
-   * @param {number} stepNumber - O número da etapa a ser exibida.
+   * @param {number} stepNumber -
    */
   const showStep = (stepNumber) => {
     formSteps.forEach((formStep) => formStep.classList.add("hidden"));
@@ -68,22 +66,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     currentStep = stepNumber;
     updateProgress();
-    window.scrollTo(0, 0); // Rola para o topo da página
+    window.scrollTo(0, 0); 
   };
 
-  /**
-   * Navega para a próxima etapa.
-   */
   const nextStep = () => {
     if (currentStep < totalSteps) {
       showStep(currentStep + 1);
     }
   };
 
-  /**
-   * Navega para a etapa anterior.
-   * Esta função é exposta globalmente para ser usada pelo 'onclick' no HTML.
-   */
   window.previousStep = () => {
     if (currentStep > 1) {
       showStep(currentStep - 1);
@@ -99,16 +90,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const icon = input.nextElementSibling;
     if (input.type === "password") {
       input.type = "text";
-      // Ícone de olho aberto (exemplo, pode ser trocado por outro SVG se desejar)
+
       icon.innerHTML = `<path d="M12 7c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5m0-2C8.13 5 5 8.13 5 12s3.13 7 7 7 7-3.13 7-7-3.13-7-7-7zm0 10c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/>`;
     } else {
       input.type = "password";
-      // Ícone de olho fechado (original)
       icon.innerHTML = `<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>`;
     }
   };
-
-  // --- FUNÇÕES DE VALIDAÇÃO E MÁSCARA ---
 
   const showError = (input, message) => {
     const errorDiv = document.getElementById(`${input.id}Error`);
@@ -141,7 +129,6 @@ document.addEventListener("DOMContentLoaded", () => {
       hasNumber: /\d/.test(password),
     };
 
-    // Atualiza a UI com os requisitos
     for (const key in requirements) {
       const li = document.getElementById(key);
       if (li) {
@@ -155,28 +142,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const validateStep1 = () => {
     let isValid = true;
-    // Validação de E-mail
+
     if (!validateEmail(inputs.email.value)) {
       showError(inputs.email, "Por favor, digite um e-mail válido");
       isValid = false;
     } else {
       hideError(inputs.email);
     }
-    // Validação de Confirmação de E-mail
     if (inputs.email.value !== inputs.confirmEmail.value) {
       showError(inputs.confirmEmail, "Os e-mails não coincidem");
       isValid = false;
     } else {
       hideError(inputs.confirmEmail);
     }
-    // Validação de Senha
     if (!validatePassword(inputs.senha.value)) {
       showError(inputs.senha, "A senha não atende aos requisitos.");
       isValid = false;
     } else {
       hideError(inputs.senha);
     }
-    // Validação de Confirmação de Senha
     if (inputs.senha.value !== inputs.confirmSenha.value) {
       showError(inputs.confirmSenha, "As senhas não coincidem");
       isValid = false;
@@ -218,9 +202,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // --- EVENT LISTENERS ---
-
-  // Validação em tempo real e máscaras
   inputs.senha.addEventListener("input", () => validatePassword(inputs.senha.value));
   inputs.cpf.addEventListener("input", () => {
     inputs.cpf.value = formatCPF(inputs.cpf.value);
@@ -230,7 +211,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   inputs.cep.addEventListener("blur", () => fetchAddress(inputs.cep.value));
 
-  // Lógica para campos condicionais (Nome Social, Atuação Profissional, Tipo de Endereço)
   inputs.nomeSocialRadios.forEach(radio => {
     radio.addEventListener("change", () => {
         const show = document.getElementById("nomeSocialSim").checked;
@@ -257,7 +237,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-  // Submissão dos formulários
   forms.form1.addEventListener("submit", (e) => {
     e.preventDefault();
     if (validateStep1()) {
@@ -267,8 +246,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   forms.form2.addEventListener("submit", (e) => {
     e.preventDefault();
-    // Adicione validações para a etapa 2 se necessário, ex:
-    // if (validateStep2()) { nextStep(); }
     nextStep();
   });
 
@@ -289,12 +266,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   forms.form6.addEventListener("submit", (e) => {
     e.preventDefault();
-    // Oculta o último passo e mostra o modal de sucesso
     document.getElementById("step6").classList.add("hidden");
     document.getElementById("successModal").classList.remove("hidden");
   });
 
-
-  // --- INICIALIZAÇÃO ---
   showStep(1);
 });

@@ -1,174 +1,255 @@
-document.addEventListener("DOMContentLoaded", () => {
-    // --- SELETORES DE ELEMENTOS ---
-    const sidebar = document.getElementById("sidebar");
-    const navLinks = document.querySelectorAll(".sidebar-nav .nav-link");
-    const workGrid = document.getElementById("workGrid");
-    const modal = document.getElementById("modal");
-    const workForm = document.getElementById("workForm");
-    const imageInput = document.getElementById("imageInput");
-    const imagePreviewContainer = document.getElementById("imagePreviewContainer");
-    const imageModal = document.getElementById("imageModal");
-    const modalImage = document.getElementById("modalImage");
+  let works = [
+    {
+        title: "Revista ED. Cultural",
+        date: "2024-07-15",
+        description: "Desenvolvimento de uma revista sobre a trajetória educacional da população negra, desde o período abolicionista até a atualidade",
+        images: [
+            "../IMAGENS/2.png",
+            "../IMAGENS/11.jpg"
+        ]
+    },
+    {
+        title: "Nova capa do livro O Cortiço",
+        date: "2024-04-20",
+        description: "Criação de uma nova capa para o livro 'O Cortiço' de Aluísio Azevedo, utilizando uma de suas personagens femininas, seja ela Rita Baiana ou a Bertoleza. Nós da Equipe Rocket decidimos por usar como centro da capa a Bertoleza destacando a história marcante da personagem.",
+        images: [
+            "../IMAGENS/5.JPG"
+        ]
+    },
+    {
+        title: "Animação 'De volta para o passado'",
+        date: "2024-08-16",
+        description: "Desenvolvimento de uma animação que fala sobre os processos e impactos da segunda revolução industrial no continente asiático e africano, e as novas tecnologias que surgiram nesse período.",
+        images: [
+            "../IMAGENS/6.JPG",
+            "../IMAGENS/7.JPG",
+            "../IMAGENS/4.JPG"
+        ]
+    },
+    {
+        title: "Maquete do SESI",
+        date: "2024-08-16",
+        description: "Desenvolvimento de uma maquete da escola SESI Djalma Pessoa, com foco na implementação de um semáforo inteligente para pessoas deficientes que se adapta ao fluxo de veículos e pedestres, melhorando a segurança e eficiência do tráfego.",
+        images: [
+            "../IMAGENS/8.JPG",
+            "../IMAGENS/9.JPG",
+            "../IMAGENS/12.JPG"
+        ]
+    },
+    {
+        title: "Documentário de matemática",
+        date: "2024-09-07",
+        description: "Confecção de um documentário que explora temas da matemática e da ODS 4, educação de qualidade.",
+        images: [
+            "../IMAGENS/13.PNG"
+        ]
+    },
+    {
+        title: "Filme '2A entre os mundos'",
+        date: "2025-07-29",
+        description: "Produção de um filme de ficção científica que explora temas de trabalho, tecnologia e sociedade em um futuro distópico",
+        images: [
+            "../IMAGENS/1.PNG"
+        ]
+    }
+];
 
-    // --- ESTADO DA APLICAÇÃO ---
-    let worksData = [];
-    let tempImageFiles = []; // Armazena prévias das imagens para o formulário
+            
+              
 
-    // --- DADOS PADRÃO ---
-    const defaultWorks = [
-        {
-            id: 1,
-            title: "Projeto SABER (Sistema de Análise e Benefício Educacional em Relatórios)",
-            date: "2024-07-15",
-            images: [
-                "https://i.ibb.co/1G7zBS2/Thumbnail.png",
-                "https://i.ibb.co/H0X3yQJ/Design-sem-nome-5.png",
-                "https://i.ibb.co/YBvGc1y/Apresenta-o-portf-lio-profissional-arquiteta-elegante-marsala-bege-1.png",
-            ],
-            description: "O projeto SABER é uma plataforma web inovadora que utiliza Inteligência Artificial para analisar relatórios pedagógicos, identificar padrões de desenvolvimento dos alunos e gerar insights valiosos para educadores. A ferramenta visa otimizar o tempo dos professores e personalizar o aprendizado, oferecendo um suporte tecnológico avançado para a gestão educacional."
+        let selectedImages = [];
+
+        // Funções do modal
+        function openModal() {
+            document.getElementById('modal').style.display = 'block';
+            selectedImages = [];
+            updateImagePreview();
         }
-    ];
 
-    // --- FUNÇÕES DE DADOS (localStorage) ---
-    const loadWorks = () => {
-        const data = localStorage.getItem('portfolioWorks');
-        worksData = data ? JSON.parse(data) : defaultWorks;
-    };
-
-    const saveWorks = () => {
-        localStorage.setItem('portfolioWorks', JSON.stringify(worksData));
-    };
-
-    // --- FUNÇÕES DE RENDERIZAÇÃO ---
-    const renderWorks = () => {
-        workGrid.innerHTML = ""; // Limpa a galeria antes de renderizar
-        if (worksData.length === 0) {
-            workGrid.innerHTML = `<p class="empty-state">Nenhum projeto adicionado ainda. Clique no botão '+' para começar.</p>`;
-            return;
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+            document.getElementById('workForm').reset();
+            selectedImages = [];
+            updateImagePreview();
         }
-        worksData.forEach(work => {
-            const workCard = document.createElement('div');
-            workCard.className = 'work-card';
-            workCard.dataset.id = work.id;
 
-            const thumbnailsHTML = work.images.slice(1, 4).map((imgSrc, index) =>
-                `<img src="${imgSrc}" alt="Thumbnail ${index + 1}" class="thumbnail-image" onclick="changeMainImage(event, '${imgSrc}')">`
-            ).join('');
+        function openImageModal(imageSrc) {
+            document.getElementById('modalImage').src = imageSrc;
+            document.getElementById('imageModal').style.display = 'block';
+        }
 
-            workCard.innerHTML = `
-                <div class="work-images">
-                    <img src="${work.images[0]}" alt="${work.title}" class="main-image" onclick="openImageModal(event)">
-                    <div class="image-thumbnails">${thumbnailsHTML}</div>
-                </div>
-                <div class="work-content">
-                    <h3 class="work-title">${work.title}</h3>
-                    <p class="work-date">${new Date(work.date).toLocaleDateString('pt-BR', {timeZone: 'UTC'})}</p>
-                    <p class="work-description">${work.description}</p>
-                </div>
-            `;
-            workGrid.appendChild(workCard);
-        });
-    };
-    
-    // --- LÓGICA DO MODAL (Adicionar Trabalho) ---
-    window.openModal = () => modal.style.display = 'flex';
-    window.closeModal = () => {
-        modal.style.display = 'none';
-        workForm.reset();
-        imagePreviewContainer.innerHTML = '';
-        tempImageFiles = [];
-    };
-    
-    imageInput.addEventListener('change', (e) => {
-        imagePreviewContainer.innerHTML = ''; // Limpa prévias antigas
-        tempImageFiles = Array.from(e.target.files);
-        
-        tempImageFiles.forEach((file, index) => {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                const previewWrapper = document.createElement('div');
-                previewWrapper.className = 'image-preview';
-                previewWrapper.innerHTML = `
-                    <img src="${event.target.result}" alt="Preview">
-                    <button class="remove-image" onclick="removePreviewImage(event, ${index})">&times;</button>
-                `;
-                imagePreviewContainer.appendChild(previewWrapper);
+        function closeImageModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        function changeMainImage(thumbnail, workImagesContainer) {
+            const mainImage = workImagesContainer.querySelector('.main-image');
+            const allThumbnails = workImagesContainer.querySelectorAll('.thumbnail-image');
+            
+            // Remove active class from all thumbnails
+            allThumbnails.forEach(thumb => thumb.classList.remove('active'));
+            
+            // Add active class to clicked thumbnail
+            thumbnail.classList.add('active');
+            
+            // Change main image source
+            mainImage.src = thumbnail.src;
+            mainImage.alt = thumbnail.alt;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const options = { 
+                day: 'numeric', 
+                month: 'long', 
+                year: 'numeric' 
             };
-            reader.readAsDataURL(file);
-        });
-    });
-
-    window.removePreviewImage = (e, index) => {
-        e.preventDefault();
-        tempImageFiles.splice(index, 1);
-        // Re-renderiza as prévias
-        imageInput.dispatchEvent(new Event('change'));
-    };
-
-    workForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const newWork = {
-            id: Date.now(),
-            title: e.target.title.value,
-            date: e.target.date.value,
-            description: e.target.description.value,
-            images: Array.from(imagePreviewContainer.querySelectorAll('img')).map(img => img.src)
-        };
-
-        if (newWork.images.length === 0) {
-            alert("Por favor, adicione pelo menos uma imagem.");
-            return;
+            return date.toLocaleDateString('pt-BR', options);
         }
 
-        worksData.unshift(newWork); // Adiciona no início da lista
-        saveWorks();
-        renderWorks();
-        closeModal();
-    });
+        function renderWorks() {
+            const workGrid = document.getElementById('workGrid');
+            if (!workGrid) return;
+            
+            workGrid.innerHTML = '';
 
-    // --- LÓGICA DE INTERAÇÃO NA GALERIA ---
-    window.changeMainImage = (e, newSrc) => {
-        const card = e.target.closest('.work-card');
-        card.querySelector('.main-image').src = newSrc;
+            // Ordenar trabalhos por data (mais recente primeiro)
+            works.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-        // Atualiza a classe 'active' nas miniaturas
-        card.querySelectorAll('.thumbnail-image').forEach(thumb => {
-            thumb.classList.toggle('active', thumb.src === newSrc);
-        });
-    };
-    
-    window.openImageModal = (e) => {
-        modalImage.src = e.target.src;
-        imageModal.style.display = 'flex';
-    };
+            works.forEach(work => {
+                const workCard = document.createElement('div');
+                workCard.className = 'work-card';
+                
+                let imagesHtml = '';
+                if (work.images && work.images.length > 0) {
+                    const mainImage = work.images[0];
+                    const thumbnailElements = work.images.map((img, index) => 
+                        `<img src="${img}" alt="Imagem ${index + 1}" class="thumbnail-image ${index === 0 ? 'active' : ''}" onclick="changeMainImage(this, this.parentElement.parentElement)">`
+                    ).join('');
+                    
+                    imagesHtml = `
+                        <div class="work-images">
+                            <img src="${mainImage}" alt="Imagem principal" class="main-image" onclick="openImageModal('${mainImage}')">
+                            <div class="image-thumbnails">
+                                ${thumbnailElements}
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                workCard.innerHTML = `
+                    ${imagesHtml}
+                    <div class="work-content">
+                        <h3 class="work-title">${work.title}</h3>
+                        <div class="work-date">${formatDate(work.date)}</div>
+                        <p class="work-description">${work.description}</p>
+                    </div>
+                `;
+                workGrid.appendChild(workCard);
+            });
+        }
 
-    window.closeImageModal = () => {
-        imageModal.style.display = 'none';
-    };
+        function updateImagePreview() {
+            const container = document.getElementById('imagePreviewContainer');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            selectedImages.forEach((image, index) => {
+                const preview = document.createElement('div');
+                preview.className = 'image-preview';
+                preview.innerHTML = `
+                    <img src="${image}" alt="Preview">
+                    <button class="remove-image" onclick="removeImage(${index})">&times;</button>
+                `;
+                container.appendChild(preview);
+            });
+        }
 
-    // --- LÓGICA DA SIDEBAR ---
-    const setActiveLink = () => {
-        const currentPage = window.location.pathname.split('/').pop();
-        navLinks.forEach(link => {
-            if (link.getAttribute('href') === currentPage) {
-                link.classList.add("active");
+        function removeImage(index) {
+            selectedImages.splice(index, 1);
+            updateImagePreview();
+        }
+
+        // Event listeners
+        function initializeEventListeners() {
+            // Image input event listener
+            const imageInput = document.getElementById('imageInput');
+            if (imageInput) {
+                imageInput.addEventListener('change', function(e) {
+                    const files = Array.from(e.target.files);
+                    
+                    files.forEach(file => {
+                        if (file.type.startsWith('image/')) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                selectedImages.push(e.target.result);
+                                updateImagePreview();
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    });
+                });
             }
+
+            // Form submission event listener
+            const workForm = document.getElementById('workForm');
+            if (workForm) {
+                workForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const title = document.getElementById('title').value;
+                    const date = document.getElementById('date').value;
+                    const description = document.getElementById('description').value;
+
+                    if (title && date && description) {
+                        works.push({
+                            title: title,
+                            date: date,
+                            description: description,
+                            images: [...selectedImages]
+                        });
+
+                        renderWorks();
+                        closeModal();
+                    }
+                });
+            }
+
+            // Close modal when clicking outside
+            window.onclick = function(event) {
+                const modal = document.getElementById('modal');
+                const imageModal = document.getElementById('imageModal');
+                if (event.target === modal) {
+                    closeModal();
+                }
+                if (event.target === imageModal) {
+                    closeImageModal();
+                }
+            }
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                    closeImageModal();
+                }
+            });
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeEventListeners();
+            renderWorks();
         });
-    };
 
-    const loadUserInfo = () => {
-        const userNameElement = document.getElementById('sidebarUserName');
-        const userAvatarElement = document.getElementById('userAvatar');
-        const loggedInUserName = localStorage.getItem('userName') || "Usuário";
-        userNameElement.textContent = loggedInUserName;
-        userAvatarElement.textContent = loggedInUserName.charAt(0).toUpperCase();
-    };
-    
-    window.toggleSidebarMobile = () => sidebar.classList.toggle('show');
-
-    // --- INICIALIZAÇÃO ---
-    loadWorks();
-    renderWorks();
-    setActiveLink();
-    loadUserInfo();
-});
+        // Also initialize immediately if DOM is already loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                initializeEventListeners();
+                renderWorks();
+            });
+        } else {
+            initializeEventListeners();
+            renderWorks();
+        }

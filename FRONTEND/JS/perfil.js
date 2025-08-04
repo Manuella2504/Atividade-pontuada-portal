@@ -114,22 +114,21 @@ async function saveChanges() {
 }
 
 async function addItem(type, fields) {
-    const payload = { user_id: userData.personalInfo.id };
+    const payload = {}; // user_id será adicionado no backend
     fields.forEach(field => {
         payload[field] = document.getElementById(`add-${type}-${field}`).value;
-        if (field.includes('ano') && payload[field]) payload[field] = parseInt(payload[field], 10);
     });
 
-    const tableName = type === 'formacao' ? 'formacoes' : type === 'experiencia' ? 'experiencias' : 'habilidades_linguisticas';
-    await apiCall('post', `/profile/${tableName}`, payload);
+    // A 'tableName' agora é o próprio 'type'
+    await apiCall('post', `/profile/${type}`, payload);
     await loadProfileData();
     editSection(type);
 }
 
 async function removeItem(type, id) {
     if (!confirm('Tem certeza?')) return;
-    const tableName = type === 'formacao' ? 'formacoes' : type === 'experiencia' ? 'experiencias' : 'habilidades_linguisticas';
-    await apiCall('delete', `/profile/${tableName}/${id}`);
+    // A 'tableName' agora é o próprio 'type'
+    await apiCall('delete', `/profile/${type}/${id}`);
     await loadProfileData();
     editSection(type);
 }

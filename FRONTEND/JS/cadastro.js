@@ -467,14 +467,14 @@
         if (data.error) {
             alert(`Erro no cadastro: ${data.error}`);
         } else {
-            showSuccessModal();
+            localStorage.setItem('supabase.session', JSON.stringify(data.session));
+            showSuccessModal(); // Sua função que mostra o sucesso e redireciona
         }
     })
     .catch(error => {
         alert('Erro de conexão. Não foi possível completar o cadastro.');
     });
 });
-
 
 function showSuccessModal() {
     document.getElementById(`step${totalSteps}`).classList.add('hidden');

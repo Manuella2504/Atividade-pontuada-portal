@@ -60,57 +60,68 @@
         });
 
         // Manipulação do formulário
-        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Validação simples
-            const nome = document.getElementById('nome').value;
-            const email = document.getElementById('email').value;
-            const categoria = document.getElementById('categoria').value;
-            const assunto = document.getElementById('assunto').value;
-            const mensagem = document.getElementById('mensagem').value;
-            const rating = document.getElementById('rating').value;
+        // FRONTEND/JS/formulario.js
 
-            if (!nome || !email || !categoria || !assunto || !mensagem) {
-                alert('Por favor, preencha todos os campos obrigatórios.');
-                return;
-            }
+// ... (mantenha o código das estrelas e da máscara de telefone) ...
 
-            if (rating === '0') {
-                alert('Por favor, forneça uma avaliação clicando nas estrelas.');
-                return;
-            }
+// Substitua a função de submit do formulário por esta:
+document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = {
+        nome: document.getElementById('nome').value,
+        email: document.getElementById('email').value,
+        telefone: document.getElementById('telefone').value,
+        categoria: document.getElementById('categoria').value,
+        assunto: document.getElementById('assunto').value,
+        mensagem: document.getElementById('mensagem').value,
+        rating: document.getElementById('rating').value
+    };
 
-            // Simulação de envio
-            const submitBtn = document.querySelector('.submit-btn');
-            const originalText = submitBtn.textContent;
-            
-            submitBtn.textContent = 'Enviando...';
-            submitBtn.disabled = true;
+    if (!formData.nome || !formData.email || !formData.categoria || !formData.assunto || !formData.mensagem) {
+        alert('Por favor, preencha todos os campos obrigatórios.');
+        return;
+    }
 
-            setTimeout(() => {
-                // Mostra mensagem de sucesso
-                document.getElementById('successMessage').style.display = 'block';
-                
-                // Reset do formulário
-                document.getElementById('feedbackForm').reset();
-                ratingInput.value = '0';
-                ratingText.textContent = 'Clique nas estrelas para avaliar';
-                stars.forEach(s => {
-                    s.classList.remove('active');
-                    s.style.color = '#d1d5db';
-                });
-                
-                // Restaura o botão
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
+    if (formData.rating === '0') {
+        alert('Por favor, forneça uma avaliação clicando nas estrelas.');
+        return;
+    }
 
-                // Esconde a mensagem após 5 segundos
-                setTimeout(() => {
-                    document.getElementById('successMessage').style.display = 'none';
-                }, 5000);
-            }, 1500);
-        });
+    const submitBtn = document.querySelector('.submit-btn');
+    submitBtn.textContent = 'Enviando...';
+    submitBtn.disabled = true;
+
+    fetch('http://localhost:3000/api/auth/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            throw new Error(data.error);
+        }
+        document.getElementById('successMessage').style.display = 'block';
+        document.getElementById('feedbackForm').reset();
+        
+        // Reset das estrelas
+        ratingInput.value = '0';
+        ratingText.textContent = 'Clique nas estrelas para avaliar';
+        stars.forEach(s => s.classList.remove('active'));
+
+        setTimeout(() => {
+            document.getElementById('successMessage').style.display = 'none';
+        }, 5000);
+    })
+    .catch(error => {
+        alert(`Erro ao enviar formulário: ${error.message}`);
+    })
+    .finally(() => {
+        submitBtn.textContent = 'Enviar Feedback';
+        submitBtn.disabled = false;
+    });
+});
 
         // Função para alternar sidebar
         function toggleSidebar() {

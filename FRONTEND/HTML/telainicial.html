@@ -1,406 +1,541 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RocketLab - Portal Acadêmico</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
-     <link rel="shortcut icon" href="../IMAGENS/Logo roxa.png" type="image/x-icon">
-    <link rel="stylesheet" href="../CSS/telainicial.css">
+    <link
+      rel="shortcut icon"
+      href="../IMAGENS/Logo roxa.png"
+      type="image/x-icon"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="../CSS/telainicial.css" />
 
-</head>
-<body>
-
+    <script src="../JS/shared.js" defer></script>
+  </head>
+  <body>
     <header class="main-header">
-    <nav class="navbar navbar-expand-lg bg-white shadow-sm">
+      <nav class="navbar navbar-expand-lg bg-white shadow-sm">
         <div class="container-fluid">
-            <a class="navbar-brand" href="telainicial.html">
-                <img src="../IMAGENS/Logo roxa.png" alt="RocketLab Logo" style="height: 40px;">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="telainicial.html">Início</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="login.html">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="cadastro.html">Cadastre-se</a>
-                    </li>
-                </ul>
-            </div>
+          <a class="navbar-brand" href="telainicial.html">
+            <img
+              src="../IMAGENS/Logo roxa.png"
+              alt="RocketLab Logo"
+              style="height: 40px"
+            />
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="telainicial.html">Início</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="login.html">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="cadastro.html">Cadastre-se</a>
+              </li>
+            </ul>
+          </div>
         </div>
-    </nav>
-</header>
+      </nav>
+    </header>
 
     <main>
-        <section id="inicio" class="hero">
-            <div class="carousel-container">
-                <div class="carousel-track" id="carouselTrack">
-                    <!-- Slide 1 - Design original com card -->
-                    <div class="carousel-slide active">
-                        <div class="container">
-                            <div class="hero-content">
-                                <div class="hero-text">
-                                    <h1>Construa seu <span class="highlight">Portfólio Acadêmico</span> do Futuro</h1>
-                                    <p>Crie, organize e compartilhe suas conquistas acadêmicas e profissionais em uma plataforma intuitiva e moderna. Seja descoberto por recrutadores e instituições de todo o mundo.</p>
-                                    <div class="hero-buttons">
-                                        <a href="#" class="btn-primary">
-                                            Começar gratuitamente
-                                            <span>→</span>
-                                        </a>
-                                        
-                                    </div>
-                                </div>
-                                <div class="hero-visual">
-                                    <div class="hero-card">
-                                        <div class="profile-header">
-                                            <div class="profile-avatar">JD</div>
-                                            <div class="profile-info">
-                                                <h3>João da Silva</h3>
-                                                <p>Engenheiro de Software</p>
-                                            </div>
-                                        </div>
-                                        <div class="profile-stats">
-                                            <div class="stat">
-                                                <div class="stat-number">127</div>
-                                                <div class="stat-label">Conexões</div>
-                                            </div>
-                                            <div class="stat">
-                                                <div class="stat-number">8</div>
-                                                <div class="stat-label">Projetos</div>
-                                            </div>
-                                            <div class="stat">
-                                                <div class="stat-number">15</div>
-                                                <div class="stat-label">Certificados</div>
-                                            </div>
-                                        </div>
-                                        <div class="profile-skills">
-                                            <span class="skill-tag">React</span>
-                                            <span class="skill-tag">Python</span>
-                                            <span class="skill-tag">Design</span>
-                                            <span class="skill-tag">IA</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+      <section id="inicio" class="hero">
+        <div class="carousel-container">
+          <div class="carousel-track" id="carouselTrack">
+            <!-- Slide 1 - Design original com card -->
+            <div class="carousel-slide active">
+              <div class="container">
+                <div class="hero-content">
+                  <div class="hero-text">
+                    <h1>
+                      Construa seu
+                      <span class="highlight">Portfólio Acadêmico</span> do
+                      Futuro
+                    </h1>
+                    <p>
+                      Crie, organize e compartilhe suas conquistas acadêmicas e
+                      profissionais em uma plataforma intuitiva e moderna. Seja
+                      descoberto por recrutadores e instituições de todo o
+                      mundo.
+                    </p>
+                    <div class="hero-buttons">
+                      <a href="#" class="btn-primary">
+                        Começar gratuitamente
+                        <span>→</span>
+                      </a>
                     </div>
-
-                    <!-- Slide 2 -->
-                    <div class="carousel-slide">
-                        <div class="slide-background" style="background: linear-gradient(rgba(80, 42, 80, 0.7), rgba(186, 113, 162, 0.7));">
-                            <div class="slide-photo-bg">
-                                <img src="https://i.ibb.co/DPs4c6KQ/i-Stock-1047716020-1024x684.jpg">
-                            </div>
-                            <div class="slide-content">
-                                <h2>Construa seu Portfólio do Futuro</h2>
-                                <p>Colabore com pesquisadores e construa uma rede acadêmica global</p>
-                                <div class="hero-buttons">
-                                    <a href="#" class="btn-primary">Começar gratuitamente →</a>
-
-                                </div>
-                            </div>
+                  </div>
+                  <div class="hero-visual">
+                    <div class="hero-card">
+                      <div class="profile-header">
+                        <div class="profile-avatar">JD</div>
+                        <div class="profile-info">
+                          <h3>João da Silva</h3>
+                          <p>Engenheiro de Software</p>
                         </div>
-                    </div>
-
-                    <!-- Slide 3 -->
-                    <div class="carousel-slide">
-                        <div class="slide-background education-bg">
-                            <div class="slide-photo-bg">
-                                <img src="https://i.ibb.co/Y7H9gN67/24269342-graduacao-bone-com-terra-globo-conceito-do-global-o-negocio-estudar-no-exterior-educacional.jpg" alt="Foto Slide 3">
-                            </div>
-                            <div class="slide-content">
-                                <h2>Organize suas conquistas</h2>
-                                <p>Transforme suas pesquisas e projetos em um portfólio profissional</p>
-                                <div class="hero-buttons">
-                                    <a href="#" class="btn-primary">Começar gratuitamente →</a>
-
-                                </div>
-                            </div>
+                      </div>
+                      <div class="profile-stats">
+                        <div class="stat">
+                          <div class="stat-number">127</div>
+                          <div class="stat-label">Conexões</div>
                         </div>
+                        <div class="stat">
+                          <div class="stat-number">8</div>
+                          <div class="stat-label">Projetos</div>
+                        </div>
+                        <div class="stat">
+                          <div class="stat-number">15</div>
+                          <div class="stat-label">Certificados</div>
+                        </div>
+                      </div>
+                      <div class="profile-skills">
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Design</span>
+                        <span class="skill-tag">IA</span>
+                      </div>
                     </div>
-
+                  </div>
                 </div>
-
-                <!-- Navegação do carrossel -->
-                <div class="carousel-nav">
-                    <button class="carousel-btn prev" id="prevBtn">❮</button>
-                    <button class="carousel-btn next" id="nextBtn">❯</button>
-                </div>
-
-                <!-- Indicadores -->
-                <div class="carousel-indicators">
-                    <span class="indicator active" data-slide="0"></span>
-                    <span class="indicator" data-slide="1"></span>
-                    <span class="indicator" data-slide="2"></span>
-
-                </div>
+              </div>
             </div>
-        </section>
 
-        <section id="recursos" class="features">
-            <div class="container">
-                <h2>Recursos poderosos</h2>
-                <p class="features-subtitle">Tudo que você precisa para criar um portfólio acadêmico de destaque</p>
-                <div class="features-grid">
-                    <div class="feature-card fade-in">
-                        <div class="feature-icon">📋</div>
-                        <h3>Currículo inteligente</h3>
-                        <p>Crie currículos dinâmicos que se adaptam automaticamente para cada oportunidade, destacando suas experiências mais relevantes.</p>
-                    </div>
-                    <div class="feature-card fade-in">
-                        <div class="feature-icon">🎓</div>
-                        <h3>Portfólio acadêmico</h3>
-                        <p>Organize suas pesquisas, publicações, projetos e conquistas acadêmicas em um portfólio visual e interativo.</p>
-                    </div>
-                    <div class="feature-card fade-in">
-                        <div class="feature-icon">🤝</div>
-                        <h3>Rede profissional</h3>
-                        <p>Conecte-se com professores, pesquisadores e profissionais da sua área. Expanda sua rede acadêmica e profissional.</p>
-                    </div>
-                    <div class="feature-card fade-in">
-                        <div class="feature-icon">📊</div>
-                        <h3>Analytics avançado</h3>
-                        <p>Acompanhe visualizações do seu perfil, engajamento com seus projetos e insights sobre seu crescimento profissional.</p>
-                    </div>
+            <!-- Slide 2 -->
+            <div class="carousel-slide">
+              <div
+                class="slide-background"
+                style="
+                  background: linear-gradient(
+                    rgba(80, 42, 80, 0.7),
+                    rgba(186, 113, 162, 0.7)
+                  );
+                "
+              >
+                <div class="slide-photo-bg">
+                  <img
+                    src="https://i.ibb.co/DPs4c6KQ/i-Stock-1047716020-1024x684.jpg"
+                  />
                 </div>
-            </div>
-        </section>
-
-        <section id="como-funciona" class="how-it-works">
-            <div class="container">
-                <h2>Como funciona</h2>
-                <div class="steps-grid">
-                    <div class="step-card">
-                        <div class="step-number">1</div>
-                        <h3>Crie sua conta</h3>
-                        <p>Registre-se gratuitamente e configure seu perfil acadêmico básico em poucos minutos.</p>
-                    </div>
-                    <div class="step-card">
-                        <div class="step-number">2</div>
-                        <h3>Adicione seu conteúdo</h3>
-                        <p>Importe suas experiências, projetos, publicações e certificações de forma rápida e organizada.</p>
-                    </div>
-                    <div class="step-card">
-                        <div class="step-number">3</div>
-                        <h3>Personalize e publique</h3>
-                        <p>Customize o design do seu portfólio e publique para compartilhar com o mundo acadêmico e profissional.</p>
-                    </div>
+                <div class="slide-content">
+                  <h2>Construa seu Portfólio do Futuro</h2>
+                  <p>
+                    Colabore com pesquisadores e construa uma rede acadêmica
+                    global
+                  </p>
+                  <div class="hero-buttons">
+                    <a href="#" class="btn-primary">Começar gratuitamente →</a>
+                  </div>
                 </div>
+              </div>
             </div>
-        </section>
 
-        <section id="portfolio" class="portfolio-preview">
-            <div class="container">
-                <h2>Portfólios que impressionam</h2>
-                <p class="portfolio-subtitle">Crie perfis profissionais que destacam suas conquistas de forma visual e impactante</p>
-                <div class="portfolio-showcase">
-                    <div class="portfolio-features">
-                        <div class="portfolio-feature">
-                            <div class="portfolio-feature-icon">🎨</div>
-                            <div>
-                                <h4>Design personalizável</h4>
-                                <p>Escolha entre temas modernos e customize cores, layouts e tipografia</p>
-                            </div>
-                        </div>
-                        <div class="portfolio-feature">
-                            <div class="portfolio-feature-icon">📱</div>
-                            <div>
-                                <h4>Responsivo e moderno</h4>
-                                <p>Perfis que funcionam perfeitamente em qualquer dispositivo</p>
-                            </div>
-                        </div>
-                        <div class="portfolio-feature">
-                            <div class="portfolio-feature-icon">🔗</div>
-                            <div>
-                                <h4>Fácil compartilhamento</h4>
-                                <p>URL personalizada para compartilhar em redes sociais e currículos</p>
-                            </div>
-                        </div>
-                        <div class="portfolio-feature">
-                            <div class="portfolio-feature-icon">⚡</div>
-                            <div>
-                                <h4>Carregamento rápido</h4>
-                                <p>Otimizado para performance e indexação em mecanismos de busca</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="portfolio-mockup">
-                        <div class="mockup-device">
-                            <div class="mockup-screen">
-                                <div class="mockup-profile">
-                                    <div class="mockup-avatar">MS</div>
-                                    <div class="mockup-name">Maria Santos</div>
-                                    <div class="mockup-title">Pesquisadora em IA</div>
-                                </div>
-                                <div class="mockup-badges">
-                                    <span class="mockup-badge">Machine Learning</span>
-                                    <span class="mockup-badge">PhD</span>
-                                    <span class="mockup-badge">Publicações</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Slide 3 -->
+            <div class="carousel-slide">
+              <div class="slide-background education-bg">
+                <div class="slide-photo-bg">
+                  <img
+                    src="https://i.ibb.co/Y7H9gN67/24269342-graduacao-bone-com-terra-globo-conceito-do-global-o-negocio-estudar-no-exterior-educacional.jpg"
+                    alt="Foto Slide 3"
+                  />
                 </div>
-            </div>
-        </section>
-
-        <section id="equipe" class="team">
-            <div class="container">
-                <h2>Nossa Equipe</h2>
-                <p class="team-subtitle">Conheça os desenvolvedores apaixonados que tornam o RocketLab possível</p>
-                <div class="team-grid">
-                    <!-- Membro 1 -->
-                    <div class="team-member fade-in">
-                        <div class="member-photo">
-                            <img src="https://i.ibb.co/DgTqwB76/IMG-5911.jpg" alt="Nome do Membro">
-                        </div>
-                        <h3 class="member-name">Camila Guimarães</h3>
-                        <p class="member-role">Desenvolvedora Frontend</p>
-                        <p class="member-bio">Especializada em criar interfaces responsivas e interativas usando as mais modernas tecnologias web.</p>
-                       
-                    </div>
-
-                    <!-- Membro 2 -->
-                    <div class="team-member fade-in">
-                        <div class="member-photo">
-                            <img src="https://i.ibb.co/CK2fbTZY/IMG-5902.jpg" alt="Nome do Membro">
-                        </div>
-                        <h3 class="member-name">Manuella Souza</h3>
-                        <p class="member-role">Desenvolvedora Frontend</p>
-                        <p class="member-bio">Especialista em performance e acessibilidade, focado em entregar aplicações rápidas e compatíveis com diferentes navegadores e dispositivos.</p>
-                      
-                    </div>
-
-                    <!-- Membro 3 -->
-                    <div class="team-member fade-in">
-                        <div class="member-photo">
-                            <img src="https://i.ibb.co/27N5dNK0/IMG-5887.jpg" alt="Nome do Membro">
-                        </div>
-                        <h3 class="member-name">Marcelle Abreu</h3>
-                        <p class="member-role">Desenvolvedora Frontend</p>
-                        <p class="member-bio">Responsável por transformar protótipos em código funcional, aplicando boas práticas de versionamento e testes automatizados.</p>
-                      
-                    </div>
-
-                    <!-- Membro 4 -->
-                    <div class="team-member fade-in">
-                        <div class="member-photo">
-                            <img src="foto-membro1.jpg" alt="">
-                        </div>
-                        <h3 class="member-name">Ramon Pires</h3>
-                        <p class="member-role">Desenvolvedor Backend</p>
-                        <p class="member-bio">Especialista em arquitetura de sistemas e desenvolvimento de APIs robustas e escaláveis para aplicações modernas.</p>
-                     
-                    </div>
-
+                <div class="slide-content">
+                  <h2>Organize suas conquistas</h2>
+                  <p>
+                    Transforme suas pesquisas e projetos em um portfólio
+                    profissional
+                  </p>
+                  <div class="hero-buttons">
+                    <a href="#" class="btn-primary">Começar gratuitamente →</a>
+                  </div>
                 </div>
+              </div>
             </div>
-        </section>
+          </div>
+
+          <!-- Navegação do carrossel -->
+          <div class="carousel-nav">
+            <button class="carousel-btn prev" id="prevBtn">❮</button>
+            <button class="carousel-btn next" id="nextBtn">❯</button>
+          </div>
+
+          <!-- Indicadores -->
+          <div class="carousel-indicators">
+            <span class="indicator active" data-slide="0"></span>
+            <span class="indicator" data-slide="1"></span>
+            <span class="indicator" data-slide="2"></span>
+          </div>
+        </div>
+      </section>
+
+      <section id="recursos" class="features">
+        <div class="container">
+          <h2>Recursos poderosos</h2>
+          <p class="features-subtitle">
+            Tudo que você precisa para criar um portfólio acadêmico de destaque
+          </p>
+          <div class="features-grid">
+            <div class="feature-card fade-in">
+              <div class="feature-icon">📋</div>
+              <h3>Currículo inteligente</h3>
+              <p>
+                Crie currículos dinâmicos que se adaptam automaticamente para
+                cada oportunidade, destacando suas experiências mais relevantes.
+              </p>
+            </div>
+            <div class="feature-card fade-in">
+              <div class="feature-icon">🎓</div>
+              <h3>Portfólio acadêmico</h3>
+              <p>
+                Organize suas pesquisas, publicações, projetos e conquistas
+                acadêmicas em um portfólio visual e interativo.
+              </p>
+            </div>
+            <div class="feature-card fade-in">
+              <div class="feature-icon">🤝</div>
+              <h3>Rede profissional</h3>
+              <p>
+                Conecte-se com professores, pesquisadores e profissionais da sua
+                área. Expanda sua rede acadêmica e profissional.
+              </p>
+            </div>
+            <div class="feature-card fade-in">
+              <div class="feature-icon">📊</div>
+              <h3>Analytics avançado</h3>
+              <p>
+                Acompanhe visualizações do seu perfil, engajamento com seus
+                projetos e insights sobre seu crescimento profissional.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="como-funciona" class="how-it-works">
+        <div class="container">
+          <h2>Como funciona</h2>
+          <div class="steps-grid">
+            <div class="step-card">
+              <div class="step-number">1</div>
+              <h3>Crie sua conta</h3>
+              <p>
+                Registre-se gratuitamente e configure seu perfil acadêmico
+                básico em poucos minutos.
+              </p>
+            </div>
+            <div class="step-card">
+              <div class="step-number">2</div>
+              <h3>Adicione seu conteúdo</h3>
+              <p>
+                Importe suas experiências, projetos, publicações e certificações
+                de forma rápida e organizada.
+              </p>
+            </div>
+            <div class="step-card">
+              <div class="step-number">3</div>
+              <h3>Personalize e publique</h3>
+              <p>
+                Customize o design do seu portfólio e publique para compartilhar
+                com o mundo acadêmico e profissional.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="portfolio" class="portfolio-preview">
+        <div class="container">
+          <h2>Portfólios que impressionam</h2>
+          <p class="portfolio-subtitle">
+            Crie perfis profissionais que destacam suas conquistas de forma
+            visual e impactante
+          </p>
+          <div class="portfolio-showcase">
+            <div class="portfolio-features">
+              <div class="portfolio-feature">
+                <div class="portfolio-feature-icon">🎨</div>
+                <div>
+                  <h4>Design personalizável</h4>
+                  <p>
+                    Escolha entre temas modernos e customize cores, layouts e
+                    tipografia
+                  </p>
+                </div>
+              </div>
+              <div class="portfolio-feature">
+                <div class="portfolio-feature-icon">📱</div>
+                <div>
+                  <h4>Responsivo e moderno</h4>
+                  <p>
+                    Perfis que funcionam perfeitamente em qualquer dispositivo
+                  </p>
+                </div>
+              </div>
+              <div class="portfolio-feature">
+                <div class="portfolio-feature-icon">🔗</div>
+                <div>
+                  <h4>Fácil compartilhamento</h4>
+                  <p>
+                    URL personalizada para compartilhar em redes sociais e
+                    currículos
+                  </p>
+                </div>
+              </div>
+              <div class="portfolio-feature">
+                <div class="portfolio-feature-icon">⚡</div>
+                <div>
+                  <h4>Carregamento rápido</h4>
+                  <p>
+                    Otimizado para performance e indexação em mecanismos de
+                    busca
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="portfolio-mockup">
+              <div class="mockup-device">
+                <div class="mockup-screen">
+                  <div class="mockup-profile">
+                    <div class="mockup-avatar">MS</div>
+                    <div class="mockup-name">Maria Santos</div>
+                    <div class="mockup-title">Pesquisadora em IA</div>
+                  </div>
+                  <div class="mockup-badges">
+                    <span class="mockup-badge">Machine Learning</span>
+                    <span class="mockup-badge">PhD</span>
+                    <span class="mockup-badge">Publicações</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="equipe" class="team">
+        <div class="container">
+          <h2>Nossa Equipe</h2>
+          <p class="team-subtitle">
+            Conheça os desenvolvedores apaixonados que tornam o RocketLab
+            possível
+          </p>
+          <div class="team-grid">
+            <!-- Membro 1 -->
+            <div class="team-member fade-in">
+              <div class="member-photo">
+                <img
+                  src="https://i.ibb.co/DgTqwB76/IMG-5911.jpg"
+                  alt="Nome do Membro"
+                />
+              </div>
+              <h3 class="member-name">Camila Guimarães</h3>
+              <p class="member-role">Desenvolvedora Frontend</p>
+              <p class="member-bio">
+                Especializada em criar interfaces responsivas e interativas
+                usando as mais modernas tecnologias web.
+              </p>
+            </div>
+
+            <!-- Membro 2 -->
+            <div class="team-member fade-in">
+              <div class="member-photo">
+                <img
+                  src="https://i.ibb.co/CK2fbTZY/IMG-5902.jpg"
+                  alt="Nome do Membro"
+                />
+              </div>
+              <h3 class="member-name">Manuella Souza</h3>
+              <p class="member-role">Desenvolvedora Frontend</p>
+              <p class="member-bio">
+                Especialista em performance e acessibilidade, focado em entregar
+                aplicações rápidas e compatíveis com diferentes navegadores e
+                dispositivos.
+              </p>
+            </div>
+
+            <!-- Membro 3 -->
+            <div class="team-member fade-in">
+              <div class="member-photo">
+                <img
+                  src="https://i.ibb.co/27N5dNK0/IMG-5887.jpg"
+                  alt="Nome do Membro"
+                />
+              </div>
+              <h3 class="member-name">Marcelle Abreu</h3>
+              <p class="member-role">Desenvolvedora Frontend</p>
+              <p class="member-bio">
+                Responsável por transformar protótipos em código funcional,
+                aplicando boas práticas de versionamento e testes automatizados.
+              </p>
+            </div>
+
+            <!-- Membro 4 -->
+            <div class="team-member fade-in">
+              <div class="member-photo">
+                <img src="foto-membro1.jpg" alt="" />
+              </div>
+              <h3 class="member-name">Ramon Pires</h3>
+              <p class="member-role">Desenvolvedor Backend</p>
+              <p class="member-bio">
+                Especialista em arquitetura de sistemas e desenvolvimento de
+                APIs robustas e escaláveis para aplicações modernas.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
-        <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-content">
-                <!-- Logo e Descrição -->
-                <div class="footer-section">
-                    <div class="footer-logo">
-
-                        <h3>Rocket Lab</h3>
-                    </div>
-                    <p class="footer-description">
-                        Plataforma de currículos e trajetórias acadêmicas, conectando profissionais e pesquisadores de forma prática e organizada
-                    </p>
-                    <div class="footer-social">
-                        <a href="#" class="social-link">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="social-link">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="social-link">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="social-link">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.347-.09.375-.298 1.199-.338 1.363-.053.225-.172.271-.402.160-1.507-.7-2.448-2.78-2.448-4.958 0-3.77 2.737-7.229 7.892-7.229 4.144 0 7.365 2.953 7.365 6.899 0 4.117-2.595 7.431-6.199 7.431-1.211 0-2.357-.629-2.75-1.378 0 0-.599 2.282-.744 2.840-.282 1.084-1.064 2.456-1.549 3.235C9.584 23.815 10.77 24.001 12.017 24.001c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001 12.017.001z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Links Rápidos -->
-                <div class="footer-section">
-                    <h4>Navegação</h4>
-                    <ul class="footer-links">
-                        <li><a href="#home">Início</a></li>
-                        <li><a href="#sobre">Sobre Nós</a></li>
-                        <li><a href="#projetos">Projetos</a></li>
-                        <li><a href="#eventos">Eventos</a></li>
-                        <li><a href="#equipe">Equipe</a></li>
-                    </ul>
-                </div>
-
-                <!-- Projetos -->
-                <div class="footer-section">
-                    <h4>Nossos Projetos</h4>
-                    <ul class="footer-links">
-                        <li><a href="#enchant">Enchant</a></li>
-                        <li><a href="#saber">SABER</a></li>
-                        <li><a href="#steam">Mostra STEAM</a></li>
-                        <li><a href="#startups">Programa Startups</a></li>
-                    </ul>
-                </div>
-
-                <!-- Contato -->
-                <div class="footer-section">
-                    <h4>Contato</h4>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                            </svg>
-                            <span>contato@rocketlab.edu</span>
-                        </div>
-                        <div class="contact-item">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                            </svg>
-                            <span>Salvador, Bahia - Brasil</span>
-                        </div>
-                    </div>
-                </div>
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-content">
+          <!-- Logo e Descrição -->
+          <div class="footer-section">
+            <div class="footer-logo">
+              <h3>Rocket Lab</h3>
             </div>
-
-            <!-- Copyright -->
-            <div class="footer-bottom">
-                <div class="footer-divider"></div>
-                <div class="footer-copyright">
-                    <p>&copy; 2024 Rocket Lab. Todos os direitos reservados.</p>
-                    <div class="footer-bottom-links">
-                        <a href="#privacy">Política de Privacidade</a>
-                        <a href="#terms">Termos de Uso</a>
-                    </div>
-                </div>
+            <p class="footer-description">
+              Plataforma de currículos e trajetórias acadêmicas, conectando
+              profissionais e pesquisadores de forma prática e organizada
+            </p>
+            <div class="footer-social">
+              <a href="#" class="social-link">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"
+                  />
+                </svg>
+              </a>
+              <a href="#" class="social-link">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"
+                  />
+                </svg>
+              </a>
+              <a href="#" class="social-link">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"
+                  />
+                </svg>
+              </a>
+              <a href="#" class="social-link">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.347-.09.375-.298 1.199-.338 1.363-.053.225-.172.271-.402.160-1.507-.7-2.448-2.78-2.448-4.958 0-3.77 2.737-7.229 7.892-7.229 4.144 0 7.365 2.953 7.365 6.899 0 4.117-2.595 7.431-6.199 7.431-1.211 0-2.357-.629-2.75-1.378 0 0-.599 2.282-.744 2.840-.282 1.084-1.064 2.456-1.549 3.235C9.584 23.815 10.77 24.001 12.017 24.001c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001 12.017.001z"
+                  />
+                </svg>
+              </a>
             </div>
+          </div>
+
+          <!-- Links Rápidos -->
+          <div class="footer-section">
+            <h4>Navegação</h4>
+            <ul class="footer-links">
+              <li><a href="#home">Início</a></li>
+              <li><a href="#sobre">Sobre Nós</a></li>
+              <li><a href="#projetos">Projetos</a></li>
+              <li><a href="#eventos">Eventos</a></li>
+              <li><a href="#equipe">Equipe</a></li>
+            </ul>
+          </div>
+
+          <!-- Projetos -->
+          <div class="footer-section">
+            <h4>Nossos Projetos</h4>
+            <ul class="footer-links">
+              <li><a href="#enchant">Enchant</a></li>
+              <li><a href="#saber">SABER</a></li>
+              <li><a href="#steam">Mostra STEAM</a></li>
+              <li><a href="#startups">Programa Startups</a></li>
+            </ul>
+          </div>
+
+          <!-- Contato -->
+          <div class="footer-section">
+            <h4>Contato</h4>
+            <div class="contact-info">
+              <div class="contact-item">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
+                  />
+                </svg>
+                <span>contato@rocketlab.edu</span>
+              </div>
+              <div class="contact-item">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                  />
+                </svg>
+                <span>Salvador, Bahia - Brasil</span>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <!-- Copyright -->
+        <div class="footer-bottom">
+          <div class="footer-divider"></div>
+          <div class="footer-copyright">
+            <p>&copy; 2024 Rocket Lab. Todos os direitos reservados.</p>
+            <div class="footer-bottom-links">
+              <a href="#privacy">Política de Privacidade</a>
+              <a href="#terms">Termos de Uso</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </footer>
 
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../JS/telainicial.js"></script>
-</body>
+    <script src="../JS/telainicial.js"></script>
+  </body>
 </html>

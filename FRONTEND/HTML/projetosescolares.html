@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LabRocket - Inovação Educacional</title>
-    <link rel="shortcut icon" href="../IMAGENS/Logo roxa.png" type="image/x-icon">
+    <title>Exposição de Trabalhos</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-   <link rel="stylesheet" href="../CSS/inicialdepois.css">
-   <script src="../JS/inicialdepois.js"></script>
+    <link rel="shortcut icon" href="../IMAGENS/Logo roxa.png" type="image/x-icon">
+    <link rel="stylesheet" href="../CSS/galeria.css">
+    <script src="../JS/galeria.js" ></script>
 </head>
 <body>
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
-        
         <div class="sidebar-header">
             <h4 class="brand-text">LabRocket</h4>
         </div>
@@ -53,9 +52,9 @@
             <div class="nav-section-title">Quem somos</div>
             
             <div class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="./quemsomos.html" class="nav-link">
                     <i class="fas fa-box"></i>
-                    <span class="nav-text">Curriculo</span>
+                    <span class="nav-text">Currículo</span>
                 </a>
             </div>
         </nav>
@@ -68,170 +67,71 @@
         </div>
     </div>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1 class="hero-title">LabRocket</h1>
-                <h2 class="hero-subtitle">Inovação Educacional</h2>
-                <p class="hero-description">
-                    Transformando a educação através de projetos inovadores, tecnologia avançada e metodologias criativas. 
-                    Explore nosso portfólio de trabalhos acadêmicos e descobra como estamos moldando o futuro da aprendizagem.
-                </p>
-                <div class="cta-buttons">
-                    <a href="projetosescolares.html" class="btn btn-primary">
-                        <i class="fas fa-images"></i>
-                        Ver Portfólio
-                    </a>
-                    <a href="#about" class="btn btn-secondary">
-                        <i class="fas fa-info-circle"></i>
-                        Saiba Mais
-                    </a>
-                </div>
-            </div>
-            <svg class="hero-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <!-- Background circle with gradient -->
-                <defs>
-                    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:#502A50;stop-opacity:1" />
-                        <stop offset="50%" style="stop-color:#7E2A53;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#BA71A2;stop-opacity:1" />
-                    </linearGradient>
-                </defs>
-                
-                <!-- Background rounded rectangle -->
-                <rect x="20" y="20" width="160" height="160" rx="30" ry="30" fill="url(#logoGradient)"/>
-                
-                <!-- Book base -->
-                <path d="M40 120 Q40 110 50 110 L150 110 Q160 110 160 120 L160 170 Q160 180 150 180 L50 180 Q40 180 40 170 Z" fill="white"/>
-                
-                <!-- Book pages lines -->
-                <line x1="55" y1="130" x2="95" y2="130" stroke="#502A50" stroke-width="3" stroke-linecap="round"/>
-                <line x1="55" y1="140" x2="85" y2="140" stroke="#502A50" stroke-width="3" stroke-linecap="round"/>
-                <line x1="55" y1="150" x2="100" y2="150" stroke="#502A50" stroke-width="3" stroke-linecap="round"/>
-                <line x1="55" y1="160" x2="90" y2="160" stroke="#502A50" stroke-width="3" stroke-linecap="round"/>
-                
-                <!-- Right page -->
-                <path d="M105 110 Q115 110 115 120 L115 170 Q115 180 105 180 L150 180 Q160 180 160 170 L160 120 Q160 110 150 110 Z" fill="white"/>
-                
-                <!-- Rocket body -->
-                <ellipse cx="100" cy="85" rx="15" ry="35" fill="white"/>
-                
-                <!-- Rocket nose cone -->
-                <path d="M100 45 L85 65 L115 65 Z" fill="white"/>
-                
-                <!-- Rocket window -->
-                <circle cx="100" cy="75" r="8" fill="#502A50"/>
-                
-                <!-- Rocket fins -->
-                <path d="M85 95 L75 105 L85 105 Z" fill="white"/>
-                <path d="M115 95 L125 105 L115 105 Z" fill="white"/>
-                
-                <!-- Rocket flames -->
-                <ellipse cx="100" cy="125" rx="8" ry="15" fill="white" opacity="0.9"/>
-                <ellipse cx="100" cy="130" rx="5" ry="10" fill="#BA71A2" opacity="0.8"/>
-                
-                <!-- Stars -->
-                <g fill="white">
-                    <path d="M60 50 L62 55 L67 55 L63 58 L65 63 L60 60 L55 63 L57 58 L53 55 L58 55 Z"/>
-                    <path d="M140 40 L141 43 L144 43 L142 45 L143 48 L140 46 L137 48 L138 45 L136 43 L139 43 Z"/>
-                    <path d="M130 70 L131 72 L133 72 L132 73 L133 75 L130 74 L128 75 L129 73 L127 72 L129 72 Z"/>
-                </g>
-            </svg>
+    <!-- Main Content -->
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Exposição de Trabalhos</h1>
+            <p class="subt">Portfólio profissional e acadêmico</p>
         </div>
-    </section>
 
-    <!-- Features Section -->
-    <section class="features" id="about">
-        <div class="features-container">
-            <h2 class="features-title">Nossos Diferenciais</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-lightbulb"></i>
-                    </div>
-                    <h3 class="feature-title">Inovação</h3>
-                    <p class="feature-description">
-                        Projetos únicos que combinam criatividade com tecnologia de ponta para criar soluções educacionais revolucionárias.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3 class="feature-title">Colaboração</h3>
-                    <p class="feature-description">
-                        Trabalho em equipe multidisciplinar que une diferentes perspectivas para alcançar resultados excepcionais.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3 class="feature-title">Resultados</h3>
-                    <p class="feature-description">
-                        Foco em impacto real e mensurável, criando projetos que fazem a diferença na comunidade educacional.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-cogs"></i>
-                    </div>
-                    <h3 class="feature-title">Tecnologia</h3>
-                    <p class="feature-description">
-                        Uso de ferramentas modernas e metodologias avançadas para desenvolver soluções eficazes e inovadoras.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h3 class="feature-title">Educação</h3>
-                    <p class="feature-description">
-                        Compromisso com a excelência educacional e o desenvolvimento contínuo de conhecimentos e habilidades.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-globe"></i>
-                    </div>
-                    <h3 class="feature-title">Impacto Social</h3>
-                    <p class="feature-description">
-                        Projetos que abordam questões sociais importantes e contribuem para um mundo mais justo e igualitário.
-                    </p>
-                </div>
+        <!-- Image Modal Viewer -->
+        <div class="modal-image-viewer" id="imageModal">
+            <div class="modal-image-content">
+                <img id="modalImage" src="" alt="Imagem ampliada">
             </div>
+            <button class="close-btn" onclick="closeImageModal()" style="color: white; font-size: 30px;">&times;</button>
         </div>
-    </section>
 
-    <!-- Stats Section -->
-    <section class="stats">
-        <div class="stats-container">
-            <div class="stat-item">
-                <span class="stat-number">25+</span>
-                <span class="stat-label">Projetos Concluídos</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">500+</span>
-                <span class="stat-label">Horas de Pesquisa</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">15</span>
-                <span class="stat-label">Prêmios Recebidos</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">1000+</span>
-                <span class="stat-label">Pessoas Impactadas</span>
-            </div>
+        <!-- Work Grid -->
+        <div class="work-grid" id="workGrid">
+            <!-- Trabalhos serão carregados aqui via JavaScript -->
         </div>
-    </section>
-      <footer class="footer">
+    </div>
+
+    <!-- Add Work Button -->
+    <button class="add-work-btn" onclick="openModal()">+</button>
+
+    <!-- Add Work Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <h2>Adicionar Novo Trabalho</h2>
+            <form id="workForm">
+                <div class="form-group">
+                    <label for="title">Título do Trabalho</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="date">Data de Conclusão</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+                <div class="form-group">
+                    <label>Imagens do Projeto</label>
+                    <div class="image-upload-area" onclick="document.getElementById('imageInput').click()">
+                        <p>Clique aqui para adicionar imagens</p>
+                        <small>Você pode adicionar múltiplas imagens</small>
+                    </div>
+                    <input type="file" id="imageInput" multiple accept="image/*" style="display: none;">
+                    <div class="image-preview-container" id="imagePreviewContainer"></div>
+                </div>
+                <div class="form-group">
+                    <label for="description">Descrição</label>
+                    <textarea id="description" name="description" placeholder="Descreva detalhes do projeto, tecnologias utilizadas, resultados obtidos..." required></textarea>
+                </div>
+                <div class="form-buttons">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Adicionar Trabalho</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
         <div class="footer-container">
             <div class="footer-content">
                 <!-- Logo e Descrição -->
                 <div class="footer-section">
                     <div class="footer-logo">
-
                         <h3>Rocket Lab</h3>
                     </div>
                     <p class="footer-description">
@@ -255,7 +155,7 @@
                         </a>
                         <a href="#" class="social-link">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.347-.09.375-.298 1.199-.338 1.363-.053.225-.172.271-.402.160-1.507-.7-2.448-2.78-2.448-4.958 0-3.77 2.737-7.229 7.892-7.229 4.144 0 7.365 2.953 7.365 6.899 0 4.117-2.595 7.431-6.199 7.431-1.211 0-2.357-.629-2.75-1.378 0 0-.599 2.282-.744 2.840-.282 1.084-1.064 2.456-1.549 3.235C9.584 23.815 10.77 24.001 12.017 24.001c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001 12.017.001z"/>
+                                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.347-.09.375-.298 1.199-.338 1.363-.053.225-.172.271-.402.16-1.507-.7-2.448-2.78-2.448-4.958 0-3.77 2.737-7.229 7.892-7.229 4.144 0 7.365 2.953 7.365 6.899 0 4.117-2.595 7.431-6.199 7.431-1.211 0-2.357-.629-2.75-1.378 0 0-.599 2.282-.744 2.840-.282 1.084-1.064 2.456-1.549 3.235C9.584 23.815 10.77 24.001 12.017 24.001c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001 12.017.001z"/>
                             </svg>
                         </a>
                     </div>
@@ -306,7 +206,6 @@
 
             <!-- Copyright -->
             <div class="footer-bottom">
-                <div class="footer-divider"></div>
                 <div class="footer-copyright">
                     <p>&copy; 2024 Rocket Lab. Todos os direitos reservados.</p>
                     <div class="footer-bottom-links">
@@ -318,8 +217,6 @@
         </div>
     </footer>
 
-    <script>
-       
-    </script>
+  
 </body>
 </html>

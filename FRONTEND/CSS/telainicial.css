@@ -596,7 +596,7 @@ header.main-header {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--roxo1), var(--roxo2));
+  background: linear-gradient(135deg, #501f5b, #794c9e);
   color: white;
   padding: 1rem 2rem;
   border: none;

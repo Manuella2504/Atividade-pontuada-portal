@@ -26,53 +26,64 @@
   </head>
   <body>
     <!-- Mobile Toggle Button -->
-    <button class="mobile-toggle" onclick="toggleSidebar()">
-      <i class="fas fa-bars"></i>
-    </button>
-
     <div class="sidebar" id="sidebar">
-      <div class="sidebar-header">
+    <div class="sidebar-header">
         <h4 class="brand-text">LabRocket</h4>
-      </div>
-      <button class="sidebar-toggle" onclick="toggleSidebar()">
-        <i class="fas fa-chevron-left" id="toggleIcon"></i>
-      </button>
-      <nav class="sidebar-nav">
+    </div>
+
+    <nav class="sidebar-nav">
         <div class="nav-section-title">Principal</div>
         <div class="nav-item">
-          <a href="perfil.html" class="nav-link">
-            <i class="fas fa-user-circle"></i>
-            <span class="nav-text">Meu Perfil</span>
-          </a>
+            <a href="iniciodepois.html" class="nav-link">
+                <i class="fas fa-home"></i>
+                <span class="nav-text">Início</span>
+            </a>
         </div>
         <div class="nav-item">
-          <a href="eventos.html" class="nav-link active">
-            <i class="fas fa-calendar-alt"></i>
-            <span class="nav-text">Eventos</span>
-          </a>
+            <a href="perfil.html" class="nav-link">
+                <i class="fas fa-user-circle"></i>
+                <span class="nav-text">Meu Perfil</span>
+            </a>
         </div>
         <div class="nav-item">
-          <a href="formulario.html" class="nav-link">
-            <i class="fas fa-headset"></i>
-            <span class="nav-text">Suporte</span>
-          </a>
+            <a href="projetosescolares.html" class="nav-link">
+                <i class="fas fa-flask"></i>
+                <span class="nav-text">Projetos</span>
+            </a>
+        </div>
+        <div class="nav-item">
+            <a href="eventos.html" class="nav-link">
+                <i class="fas fa-calendar-alt"></i>
+                <span class="nav-text">Eventos</span>
+            </a>
         </div>
 
         <div class="nav-section-title">Comunidade</div>
         <div class="nav-item">
-          <a href="quemsomos.html" class="nav-link">
-            <i class="fas fa-users"></i>
-            <span class="nav-text">Quem Somos</span>
-          </a>
+            <a href="quemsomos.html" class="nav-link">
+                <i class="fas fa-users"></i>
+                <span class="nav-text">Quem Somos</span>
+            </a>
         </div>
-      </nav>
-      <div class="user-profile">
-        <div class="user-avatar">U</div>
+        <div class="nav-item">
+            <a href="formulario.html" class="nav-link">
+                <i class="fas fa-headset"></i>
+                <span class="nav-text">Suporte</span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="user-profile">
+        <div class="user-avatar" id="userAvatar">U</div>
         <div class="user-info">
-          <p class="user-name">usuario@email.com</p>
+            <p class="user-name" id="sidebarUserName">Usuário</p>
         </div>
-      </div>
     </div>
+</div>
+
+<button class="mobile-toggle" onclick="toggleSidebarMobile()">
+    <i class="fas fa-bars"></i>
+</button>
 
     <div class="main-content">
       <div class="container">

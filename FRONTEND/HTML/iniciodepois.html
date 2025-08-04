@@ -10,56 +10,64 @@
    <script src="../JS/inicialdepois.js"></script>
 </head>
 <body>
-    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
-        
-        <div class="sidebar-header">
-            <h4 class="brand-text">LabRocket</h4>
+    <div class="sidebar-header">
+        <h4 class="brand-text">LabRocket</h4>
+    </div>
+
+    <nav class="sidebar-nav">
+        <div class="nav-section-title">Principal</div>
+        <div class="nav-item">
+            <a href="iniciodepois.html" class="nav-link">
+                <i class="fas fa-home"></i>
+                <span class="nav-text">Início</span>
+            </a>
+        </div>
+        <div class="nav-item">
+            <a href="perfil.html" class="nav-link">
+                <i class="fas fa-user-circle"></i>
+                <span class="nav-text">Meu Perfil</span>
+            </a>
+        </div>
+        <div class="nav-item">
+            <a href="projetosescolares.html" class="nav-link">
+                <i class="fas fa-flask"></i>
+                <span class="nav-text">Projetos</span>
+            </a>
+        </div>
+        <div class="nav-item">
+            <a href="eventos.html" class="nav-link">
+                <i class="fas fa-calendar-alt"></i>
+                <span class="nav-text">Eventos</span>
+            </a>
         </div>
 
-        <nav class="sidebar-nav">
-            <div class="nav-section-title">Principal</div>
-            
-            <div class="nav-item">
-                <a href="iniciodepois.html" class="nav-link active">
-                    <i class="fas fa-home"></i>
-                    <span class="nav-text">Início</span>
-                </a>
-            </div>
-            
-            <div class="nav-item">
-                <a href="projetosescolares.html" class="nav-link">
-                    <i class="fas fa-chart-bar"></i>
-                    <span class="nav-text">Projetos escolares</span>
-                    <span class="badge">12</span>
-                </a>
-            </div>
-            
-            <div class="nav-item">
-                <a href="eventos.html" class="nav-link">
-                    <i class="fas fa-users"></i>
-                    <span class="nav-text">Eventos escolares</span>
-                </a>
-            </div>
-            
-            
-            <div class="nav-section-title">Quem somos</div>
-            
-            <div class="nav-item">
-                <a href="quemsomos.html" class="nav-link">
-                    <i class="fas fa-box"></i>
-                    <span class="nav-text">Curriculo</span>
-                </a>
-            </div>
-        </nav>
+        <div class="nav-section-title">Comunidade</div>
+        <div class="nav-item">
+            <a href="quemsomos.html" class="nav-link">
+                <i class="fas fa-users"></i>
+                <span class="nav-text">Quem Somos</span>
+            </a>
+        </div>
+        <div class="nav-item">
+            <a href="formulario.html" class="nav-link">
+                <i class="fas fa-headset"></i>
+                <span class="nav-text">Suporte</span>
+            </a>
+        </div>
+    </nav>
 
-        <div class="user-profile">
-            <div class="user-avatar"></div>
-            <div class="user-info">
-                <p class="user-name">Usuário</p>
-            </div>
+    <div class="user-profile">
+        <div class="user-avatar" id="userAvatar">U</div>
+        <div class="user-info">
+            <p class="user-name" id="sidebarUserName">Usuário</p>
         </div>
     </div>
+</div>
+
+<button class="mobile-toggle" onclick="toggleSidebarMobile()">
+    <i class="fas fa-bars"></i>
+</button>
 
     <!-- Hero Section -->
     <section class="hero" id="home">

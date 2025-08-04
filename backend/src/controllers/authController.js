@@ -67,6 +67,3 @@ export const handleContactForm = async (req, res) => {
         res.status(500).json({ error: 'Falha ao enviar o formulário.' });
     }
 };
-
-// E adicione a rota em src/routes/authRoutes.js
-router.post('/contact', handleContactForm);

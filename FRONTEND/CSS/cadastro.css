@@ -1,4 +1,4 @@
- * {
+* {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -243,6 +243,50 @@
             min-height: 100vh;
         }
 
+            header.main-header {
+        background-color: #fff;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        z-index: 1000;
+        margin: 0;
+        padding: 0;
+        border-radius: 0;
+    }
+
+    .main-header .navbar-brand img {
+        height: 40px;
+    }
+
+    .main-header .navbar-nav .nav-link {
+        font-family: 'Lexend Deca', sans-serif;
+        font-weight: 500;
+        font-size: 14px;
+        color: #333;
+        transition: color 0.3s ease;
+        margin: 0 10px;
+    }
+
+    .main-header .navbar-nav .nav-link:hover {
+        color: #750079;
+    }
+
+    .main-header .navbar-nav .nav-link.active {
+        color: #750079;
+        font-weight: 600;
+    }
+
+    @media (max-width: 991px) {
+        .main-header .navbar-nav {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .main-header .navbar-nav .nav-item {
+            margin: 5px 0;
+        }
+    }
+
         .header {
             margin-bottom: 30px;
         }
@@ -254,6 +298,7 @@
         }
 
         .logo {
+            margin-top: 80px;
             font-size: 28px;
             font-weight: 700;
             color: #501F5B;

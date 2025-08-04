@@ -12,6 +12,155 @@
             min-height: 100vh;
         }
 
+   :root {
+        --sidebar-width: 250px;
+        --sidebar-collapsed-width: 70px;
+    }
+    
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: var(--sidebar-width);
+        background: #601763;
+        z-index: 999;
+        display: flex;
+        flex-direction: column;
+        transition: width 0.3s ease;
+    }
+
+    .sidebar-header {
+        padding: 1.2rem 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-shrink: 0;
+    }
+
+    .sidebar-header .brand-text {
+        color: white;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0;
+        white-space: nowrap;
+    }
+
+    .sidebar-nav {
+        padding: 0.8rem 0;
+        flex: 1;
+        overflow-y: auto;
+    }
+
+    .nav-item {
+        margin: 0.15rem 0.4rem;
+    }
+
+    .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 12px;
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        border-radius: 8px;
+        white-space: nowrap;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .nav-link:hover {
+        background: #794C9E;
+        color: white;
+    }
+
+    .nav-link.active {
+        background: #963b99;
+        color: white;
+    }
+
+    .nav-link i {
+        width: 18px;
+        text-align: center;
+        flex-shrink: 0;
+        font-size: 0.9rem;
+    }
+
+    .nav-text {
+        font-size: 0.85rem;
+    }
+
+    .nav-section-title {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 0.8rem 0.8rem 0.3rem;
+        margin: 0.8rem 0 0.3rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .user-profile {
+        padding: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .user-avatar {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background: #963b99;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+    }
+
+    .user-info {
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .user-name {
+        color: white;
+        font-size: 0.85rem;
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    /* ESSA CLASSE É IMPORTANTE PARA O CONTEÚDO DA PÁGINA */
+    .main-content {
+        margin-left: var(--sidebar-width);
+        transition: margin-left 0.3s ease;
+        padding: 2rem; /* Adiciona um respiro para o conteúdo */
+    }
+
+    @media (max-width: 768px) {
+        .sidebar {
+            width: var(--sidebar-collapsed-width);
+        }
+        .sidebar .brand-text,
+        .sidebar .nav-text,
+        .sidebar .user-info {
+            display: none; /* Oculta os textos em telas menores */
+        }
+        .sidebar .nav-link, .sidebar .sidebar-header {
+            justify-content: center;
+        }
+        .main-content {
+            margin-left: var(--sidebar-collapsed-width);
+            padding: 1rem;
+        }
+    }
+
                 /* Footer Styles */
         .footer {
             background: linear-gradient(135deg, #461D3A, #502A50, #7E2A53);
@@ -19,6 +168,7 @@
             margin-top: 80px;
 
         }
+
 
         .footer-container {
             max-width: 1200px;
@@ -34,7 +184,7 @@
         }
 
         .footer-section h4 {
-            color: #ECD0EC;
+            color: #ffffff;
             font-size: 1.2rem;
             font-weight: 600;
             margin-bottom: 20px;

@@ -266,9 +266,66 @@ document.addEventListener("DOMContentLoaded", () => {
 
   forms.form6.addEventListener("submit", (e) => {
     e.preventDefault();
-    document.getElementById("step6").classList.add("hidden");
-    document.getElementById("successModal").classList.remove("hidden");
-  });
+
+    // 1. Coletar dados de todos os formulários
+    // É importante garantir que os IDs abaixo correspondem exatamente aos do seu HTML
+    const formData = {
+        // Etapa 1: Cadastro Inicial
+        email: document.getElementById('email').value,
+        password: document.getElementById('senha').value,
+        nacionalidade: document.getElementById('pais').value,
+
+        // Etapa 2: Informações Pessoais
+        nome_completo: document.getElementById('primeiroNome').value + ' ' + document.getElementById('sobrenome').value,
+        data_nascimento: document.getElementById('dataNascimento').value,
+        cpf: document.getElementById('cpf').value,
+        // Adicione outros campos da Etapa 2 se necessário...
+
+        // Etapa 3: Endereço
+        cep: document.getElementById('cep').value,
+        endereco: document.getElementById('endereco').value,
+        bairro: document.getElementById('bairro').value,
+        cidade: document.getElementById('cidade').value,
+        estado: document.getElementById('estado').value,
+        telefone: document.getElementById('telefone').value, // Ou 'celular' se preferir
+        // ... outros campos de endereço ...
+    };
+
+    // Adiciona um loading state ao botão (opcional, mas recomendado)
+    const submitButton = e.target.querySelector('.btn-primary');
+    submitButton.disabled = true;
+    submitButton.textContent = 'Finalizando...';
+
+    // 2. Fazer a chamada para a API de backend
+    fetch('http://localhost:3000/api/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+    })
+    .then(response => {
+        if (!response.ok) {
+            // Se a resposta não for bem-sucedida, pega o erro do corpo da resposta
+            return response.json().then(err => { throw new Error(err.error || 'Ocorreu um erro desconhecido.'); });
+        }
+        return response.json();
+    })
+    .then(data => {
+        // 3. Lidar com o sucesso
+        console.log('Usuário cadastrado com sucesso:', data);
+        document.getElementById("step6").classList.add("hidden");
+        document.getElementById("successModal").classList.remove("hidden");
+    })
+    .catch(error => {
+        // 4. Lidar com o erro
+        console.error('Erro ao cadastrar:', error);
+        alert(`Erro ao finalizar o cadastro: ${error.message}`);
+        // Restaura o botão em caso de erro
+        submitButton.disabled = false;
+        submitButton.textContent = 'Finalizar Cadastro';
+    });
+});
 
   showStep(1);
 });

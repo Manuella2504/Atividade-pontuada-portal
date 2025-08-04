@@ -36,13 +36,70 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- FUNÇÕES DE DADOS (localStorage) ---
     const loadProfileData = () => {
-        const data = localStorage.getItem('userProfileData');
-        profileData = data ? JSON.parse(data) : JSON.parse(JSON.stringify(defaultData)); // Usa dados padrão se não houver salvos
-    };
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+        // Se não houver token, redireciona para o login ou usa dados padrão
+        console.log("Nenhum usuário logado.");
+        profileData = JSON.parse(JSON.stringify(defaultData));
+        renderAll();
+        return;
+    }
 
-    const saveProfileData = () => {
-        localStorage.setItem('userProfileData', JSON.stringify(profileData));
-    };
+    fetch('http://localhost:3000/api/profile', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(res => {
+        if (!res.ok) {
+            // Se o token for inválido, limpa e redireciona
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userName');
+            window.location.href = 'login.html';
+            throw new Error('Sessão inválida');
+        }
+        return res.json();
+    })
+    .then(data => {
+        // Atualiza a estrutura de profileData com os dados da API
+        profileData.infoPessoais.nome = data.nome_completo;
+        profileData.infoPessoais.titulo = data.titulo;
+        profileData.infoPessoais.email = data.email;
+        profileData.infoPessoais.telefone = data.telefone;
+        profileData.infoPessoais.localizacao = data.localizacao;
+        profileData.infoPessoais.lattes = data.lattes;
+        // ... você precisará adicionar colunas para idiomas, formação, etc. no Supabase
+        // e carregá-los aqui.
+        renderAll();
+    })
+    .catch(error => console.error('Erro ao buscar perfil:', error));
+};
+
+// A função saveChanges também precisa ser adaptada para enviar um PUT para a API
+window.saveChanges = () => {
+    const token = localStorage.getItem('authToken');
+    // ... coleta os dados do formulário do modal ...
+    const updatedData = { /* ... objeto com os dados ... */ };
+
+    fetch('http://localhost:3000/api/profile', {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedData)
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.error) {
+            alert(data.error);
+        } else {
+            // Recarrega os dados para mostrar as atualizações
+            loadProfileData();
+            closeModal();
+        }
+    });
+};
 
     // --- FUNÇÕES DE RENDERIZAÇÃO (Exibir dados na página) ---
     const renderAll = () => {

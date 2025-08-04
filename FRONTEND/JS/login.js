@@ -123,13 +123,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const dummyUserName = "Usuário Teste";
 
             if (emailInput.value === dummyEmail && passwordInput.value === dummyPassword) {
-                // SUCESSO NO LOGIN
                 showAlert('Login realizado com sucesso! Redirecionando...', 'success');
                 
-                // Salva o nome do usuário no localStorage para usar em outras páginas
                 localStorage.setItem('userName', dummyUserName);
 
-                // Redireciona para a página principal após um pequeno atraso
                 setTimeout(() => {
                     window.location.href = 'iniciodepois.html';
                 }, 1500);

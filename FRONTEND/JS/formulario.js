@@ -89,38 +89,78 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- 4. LÓGICA DE SUBMISSÃO DO FORMULÁRIO ---
 
     feedbackForm.addEventListener("submit", (e) => {
-        // Previne o comportamento padrão de recarregar a página
-        e.preventDefault();
+    // Previne o comportamento padrão de recarregar a página
+    e.preventDefault();
 
-        const submitBtn = e.target.querySelector(".submit-btn");
+    const submitBtn = e.target.querySelector(".submit-btn");
+    const successMessage = document.getElementById("successMessage");
 
-        // Simula o envio desabilitando o botão
-        submitBtn.disabled = true;
-        submitBtn.textContent = "Enviando...";
+    // Desabilita o botão e mostra o estado de carregamento
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Enviando...";
 
-        // Simula um tempo de espera de 2 segundos para o "envio"
-        setTimeout(() => {
-            // Mostra a mensagem de sucesso
-            successMessage.style.display = "block";
+    // Coleta todos os dados do formulário
+    const formData = {
+        nome: document.getElementById('nome').value,
+        email: document.getElementById('email').value,
+        telefone: document.getElementById('telefone').value,
+        categoria: document.getElementById('categoria').value,
+        assunto: document.getElementById('assunto').value,
+        mensagem: document.getElementById('mensagem').value,
+        rating: document.getElementById('rating').value,
+    };
 
-            // Reseta o formulário
-            feedbackForm.reset();
+    // Envia os dados para a sua API no backend
+    fetch('http://localhost:3000/api/feedback', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+    })
+    .then(response => {
+        // Verifica se a requisição foi bem-sucedida
+        if (!response.ok) {
+            // Se não foi, lança um erro para ser pego pelo .catch()
+            throw new Error('Falha no servidor. Tente novamente mais tarde.');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Lida com a resposta de sucesso do servidor
+        console.log(data.message); // Exibe "Feedback enviado com sucesso!" no console
 
-            // Reseta a avaliação com estrelas para o estado inicial
-            ratingInput.value = "0";
+        // Mostra a mensagem de sucesso na tela
+        successMessage.style.display = "block";
+
+        // Reseta o formulário
+        feedbackForm.reset();
+
+        // Reseta a avaliação com estrelas para o estado inicial
+        const ratingInput = document.getElementById("rating");
+        ratingInput.value = "0";
+        // Supondo que você tenha uma função `updateStars` para atualizar a UI das estrelas
+        if (typeof updateStars === 'function') {
             updateStars(0);
+        }
 
-            // Reabilita o botão
-            submitBtn.disabled = false;
-            submitBtn.textContent = "Enviar Feedback";
-
-            // Esconde a mensagem de sucesso após 5 segundos
-            setTimeout(() => {
-                successMessage.style.display = "none";
-            }, 5000);
-
-        }, 2000);
+        // Esconde a mensagem de sucesso após 5 segundos
+        setTimeout(() => {
+            successMessage.style.display = "none";
+        }, 5000);
+    })
+    .catch(error => {
+        // Lida com erros de rede ou do servidor
+        console.error('Erro ao enviar feedback:', error);
+        alert(error.message);
+    })
+    .finally(() => {
+        // Este bloco sempre será executado, independentemente de sucesso ou erro
+        // Reabilita o botão e restaura o texto
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Enviar Feedback";
     });
+});
 
     // --- INICIALIZAÇÃO ---
     setActiveLink();

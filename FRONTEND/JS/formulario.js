@@ -1,4 +1,4 @@
-        // Sistema de avaliação por estrelas
+// Sistema de avaliação por estrelas
         const stars = document.querySelectorAll('.star');
         const ratingInput = document.getElementById('rating');
         const ratingText = document.getElementById('rating-text');
@@ -33,7 +33,7 @@
                     if (i < rating) {
                         s.style.color = '#FFD700';
                     } else {
-                        s.style.color = '#D8BFD8';
+                        s.style.color = '#d1d5db';
                     }
                 });
             });
@@ -46,7 +46,7 @@
                 if (i < currentRating) {
                     s.style.color = '#FFD700';
                 } else {
-                    s.style.color = '#D8BFD8';
+                    s.style.color = '#d1d5db';
                 }
             });
         });
@@ -96,7 +96,10 @@
                 document.getElementById('feedbackForm').reset();
                 ratingInput.value = '0';
                 ratingText.textContent = 'Clique nas estrelas para avaliar';
-                stars.forEach(s => s.classList.remove('active'));
+                stars.forEach(s => {
+                    s.classList.remove('active');
+                    s.style.color = '#d1d5db';
+                });
                 
                 // Restaura o botão
                 submitBtn.textContent = originalText;
@@ -109,14 +112,7 @@
             }, 1500);
         });
 
-        // Navegação da sidebar (simulação)
-        document.querySelectorAll('.sidebar a, .nav-menu a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                console.log('Navegando para:', this.getAttribute('href'));
-            });
-        });
-
+        // Função para alternar sidebar
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const toggleIcon = document.getElementById('toggleIcon');
@@ -126,9 +122,9 @@
             if (window.innerWidth > 768) {
                 // Desktop behavior
                 if (sidebar.classList.contains('collapsed')) {
-                    toggleIcon.className = 'fas fa-chevron-right';
+                    if (toggleIcon) toggleIcon.className = 'fas fa-chevron-right';
                 } else {
-                    toggleIcon.className = 'fas fa-chevron-left';
+                    if (toggleIcon) toggleIcon.className = 'fas fa-chevron-left';
                 }
             } else {
                 // Mobile behavior

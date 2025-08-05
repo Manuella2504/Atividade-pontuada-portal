@@ -5,17 +5,13 @@ const nodemailer = require('nodemailer');
 const cors = require('cors');
 
 const app = express();
-app.use(cors()); // Permite que seu frontend acesse a API
-app.use(express.json()); // Permite que o servidor entenda JSON
+app.use(cors()); 
+app.use(express.json()); 
 
-// Configuração do Supabase
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-// --- ROTAS DE AUTENTICAÇÃO ---
-
-// Rota de Cadastro
 app.post('/api/register', async (req, res) => {
     const { email, password, nome_completo } = req.body;
 
@@ -33,7 +29,6 @@ app.post('/api/register', async (req, res) => {
     res.status(201).json({ user: data.user });
 });
 
-// Rota de Login
 app.post('/api/login', async (req, res) => {
     const { email, password } = req.body;
 
@@ -44,7 +39,6 @@ app.post('/api/login', async (req, res) => {
 
     if (error) return res.status(400).json({ error: error.message });
 
-    // Pega o perfil junto com os dados de login
     const { data: profile, error: profileError } = await supabase
         .from('profiles')
         .select('nome_completo, titulo')
@@ -56,9 +50,7 @@ app.post('/api/login', async (req, res) => {
     res.json({ ...data, user: { ...data.user, ...profile } });
 });
 
-// --- ROTA DO FORMULÁRIO DE FEEDBACK ---
 
-// Configuração do Nodemailer (transporter)
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -97,8 +89,6 @@ app.post('/api/feedback', async (req, res) => {
     }
 });
 
-// --- ROTAS DO PERFIL DO USUÁRIO ---
-// Middleware simples para pegar o token e o usuário (em um app real, use libs como 'jsonwebtoken')
 const getUser = async (req) => {
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) throw new Error("Token não fornecido");
@@ -110,7 +100,6 @@ const getUser = async (req) => {
     return user;
 };
 
-// Rota para pegar dados do perfil
 app.get('/api/profile', async (req, res) => {
     try {
         const user = await getUser(req);
@@ -127,7 +116,6 @@ app.get('/api/profile', async (req, res) => {
     }
 });
 
-// Rota para atualizar dados do perfil
 app.put('/api/profile', async (req, res) => {
     try {
         const user = await getUser(req);
@@ -147,7 +135,6 @@ app.put('/api/profile', async (req, res) => {
     }
 });
 
-// Iniciar o servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);

@@ -8,114 +8,134 @@ document.addEventListener("DOMContentLoaded", () => {
     const closeModalBtn = document.querySelector(".modal .close");
 
     // --- VARIÁVEIS DE ESTADO ---
-    let profileData = {};
-    let currentEditingSection = null;
+    let profileData = {}; // Começa vazio, será preenchido pela API
 
-    // --- DADOS PADRÃO (USADOS SE NENHUM DADO FOR ENCONTRADO) ---
+    // --- DADOS PADRÃO (USADOS COMO FALLBACK) ---
     const defaultData = {
         infoPessoais: {
-            nome: "Usuário Teste",
-            titulo: "Estudante de Engenharia de Software",
+            nome: "Usuário",
+            titulo: "Estudante",
             foto: "U",
-            email: "usuario@rocketlab.com",
-            telefone: "(71) 99999-9999",
-            localizacao: "Salvador, Bahia",
-            lattes: "http://lattes.cnpq.br/exemplo"
+            email: "email@exemplo.com",
+            telefone: "(00) 00000-0000",
+            localizacao: "Cidade, Estado",
+            lattes: ""
         },
-        idiomas: [
-            { id: 1, idioma: "Português", nivel: "Nativo" },
-            { id: 2, idioma: "Inglês", nivel: "Avançado" }
-        ],
-        formacao: [
-            { id: 1, curso: "Análise e Desenvolvimento de Sistemas", instituicao: "Universidade Federal da Bahia", inicio: "2022", fim: "2025" }
-        ],
-        experiencia: [
-            { id: 1, cargo: "Estagiário de Desenvolvimento Front-End", empresa: "RocketLab", inicio: "2024", fim: "Atual", descricao: "Desenvolvimento e manutenção de interfaces de usuário para projetos acadêmicos inovadores." }
-        ]
+        idiomas: [],
+        formacao: [],
+        experiencia: []
     };
 
-    // --- FUNÇÕES DE DADOS (localStorage) ---
+    // --- FUNÇÕES DE DADOS (AGORA COM API) ---
     const loadProfileData = () => {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
-        // Se não houver token, redireciona para o login ou usa dados padrão
-        console.log("Nenhum usuário logado.");
-        profileData = JSON.parse(JSON.stringify(defaultData));
-        renderAll();
-        return;
-    }
-
-    fetch('http://localhost:3000/api/profile', {
-        headers: {
-            'Authorization': `Bearer ${token}`
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            console.error("Nenhum token encontrado. Redirecionando para login.");
+            window.location.href = 'login.html'; // Redireciona se não estiver logado
+            return;
         }
-    })
-    .then(res => {
-        if (!res.ok) {
-            // Se o token for inválido, limpa e redireciona
-            localStorage.removeItem('authToken');
-            localStorage.removeItem('userName');
-            window.location.href = 'login.html';
-            throw new Error('Sessão inválida');
-        }
-        return res.json();
-    })
-    .then(data => {
-        // Atualiza a estrutura de profileData com os dados da API
-        profileData.infoPessoais.nome = data.nome_completo;
-        profileData.infoPessoais.titulo = data.titulo;
-        profileData.infoPessoais.email = data.email;
-        profileData.infoPessoais.telefone = data.telefone;
-        profileData.infoPessoais.localizacao = data.localizacao;
-        profileData.infoPessoais.lattes = data.lattes;
-        // ... você precisará adicionar colunas para idiomas, formação, etc. no Supabase
-        // e carregá-los aqui.
-        renderAll();
-    })
-    .catch(error => console.error('Erro ao buscar perfil:', error));
-};
 
-// A função saveChanges também precisa ser adaptada para enviar um PUT para a API
-window.saveChanges = () => {
-    const token = localStorage.getItem('authToken');
-    // ... coleta os dados do formulário do modal ...
-    const updatedData = { /* ... objeto com os dados ... */ };
+        fetch('http://localhost:3000/api/profile', { // Lembre-se da porta 3001
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(res => {
+            if (!res.ok) {
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('userName');
+                window.location.href = 'login.html';
+                throw new Error('Sessão inválida ou expirada.');
+            }
+            return res.json();
+        })
+        .then(data => {
+            // Preenche nosso objeto profileData com os dados da API
+            profileData.infoPessoais = {
+                nome: data.nome_completo || defaultData.infoPessoais.nome,
+                titulo: data.titulo || defaultData.infoPessoais.titulo,
+                foto: (data.nome_completo || 'U').charAt(0).toUpperCase(),
+                email: data.email || defaultData.infoPessoais.email,
+                telefone: data.telefone || defaultData.infoPessoais.telefone,
+                localizacao: data.localizacao || defaultData.infoPessoais.localizacao,
+                lattes: data.lattes || defaultData.infoPessoais.lattes,
+            };
+            // OBS: As seções de idiomas, formação, etc. precisam ser adicionadas ao seu banco de dados
+            // Por enquanto, elas começarão vazias.
+            profileData.idiomas = data.idiomas || [];
+            profileData.formacao = data.formacao || [];
+            profileData.experiencia = data.experiencia || [];
 
-    fetch('http://localhost:3000/api/profile', {
-        method: 'PUT',
-        headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updatedData)
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.error) {
-            alert(data.error);
-        } else {
-            // Recarrega os dados para mostrar as atualizações
-            loadProfileData();
-            closeModal();
+            renderAll();
+        })
+        .catch(error => {
+            console.error('Erro ao buscar perfil:', error);
+            // Em caso de erro, usa os dados padrão para não quebrar a página
+            profileData = JSON.parse(JSON.stringify(defaultData));
+            renderAll();
+        });
+    };
+
+    const saveChanges = () => {
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            alert("Sua sessão expirou. Por favor, faça login novamente.");
+            return;
         }
-    });
-};
+
+        // Coleta os dados do formulário do modal
+        const updatedData = {
+            nome_completo: document.getElementById('edit-nome').value,
+            titulo: document.getElementById('edit-titulo').value,
+            email: document.getElementById('edit-email').value,
+            telefone: document.getElementById('edit-telefone').value,
+            localizacao: document.getElementById('edit-localizacao').value,
+            lattes: document.getElementById('edit-lattes').value,
+        };
+        // Aqui você adicionaria a lógica para salvar idiomas, formação, etc.
+
+        fetch('http://localhost:3000/api/profile', { // Porta 3001
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedData)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) {
+                alert(`Erro ao salvar: ${data.error}`);
+            } else {
+                console.log("Perfil atualizado:", data);
+                // Atualiza o nome de usuário na sidebar se ele foi alterado
+                localStorage.setItem('userName', data.nome_completo);
+                loadProfileData(); // Recarrega os dados para mostrar as atualizações
+                closeModal();
+            }
+        })
+        .catch(error => {
+            console.error("Erro ao salvar perfil:", error);
+            alert("Não foi possível salvar as alterações. Verifique sua conexão.");
+        });
+    };
 
     // --- FUNÇÕES DE RENDERIZAÇÃO (Exibir dados na página) ---
+    // (O resto do seu código de renderização continua aqui, sem alterações)
     const renderAll = () => {
         renderInfoPessoais();
         renderIdiomas();
         renderFormacao();
         renderExperiencia();
-        loadSidebarUserInfo(); // Atualiza também a sidebar
+        loadSidebarUserInfo();
     };
-    
+
     const renderInfoPessoais = () => {
         const info = profileData.infoPessoais;
-        document.getElementById("profilePhoto").textContent = info.foto || info.nome.charAt(0).toUpperCase();
+        document.getElementById("profilePhoto").textContent = info.foto;
         document.getElementById("userName").textContent = info.nome;
         document.getElementById("userTitle").textContent = info.titulo;
-        
+
         const contactInfo = document.getElementById("contactInfo");
         contactInfo.innerHTML = `
             <div class="info-item"><div class="info-icon"><i class="fas fa-envelope"></i></div> ${info.email}</div>
@@ -124,7 +144,7 @@ window.saveChanges = () => {
         `;
 
         const lattesLink = document.getElementById("lattesLink");
-        if(info.lattes) {
+        if (info.lattes) {
             lattesLink.href = info.lattes;
             lattesLink.style.display = 'block';
         } else {
@@ -134,7 +154,7 @@ window.saveChanges = () => {
 
     const renderIdiomas = () => {
         const container = document.getElementById("languagesArea");
-        if (profileData.idiomas.length === 0) {
+        if (!profileData.idiomas || profileData.idiomas.length === 0) {
             container.innerHTML = `<div class="empty-state">Adicione os idiomas que você domina</div>`;
             return;
         }
@@ -145,7 +165,7 @@ window.saveChanges = () => {
 
     const renderFormacao = () => {
         const container = document.getElementById("educationArea");
-        if (profileData.formacao.length === 0) {
+        if (!profileData.formacao || profileData.formacao.length === 0) {
             container.innerHTML = `<div class="empty-state">Adicione sua formação acadêmica</div>`;
             return;
         }
@@ -160,7 +180,7 @@ window.saveChanges = () => {
 
     const renderExperiencia = () => {
         const container = document.getElementById("experienceArea");
-        if (profileData.experiencia.length === 0) {
+        if (!profileData.experiencia || profileData.experiencia.length === 0) {
             container.innerHTML = `<div class="empty-state">Adicione sua experiência profissional</div>`;
             return;
         }
@@ -173,105 +193,35 @@ window.saveChanges = () => {
             </div>
         `).join('');
     };
-
+    
     // --- LÓGICA DO MODAL DE EDIÇÃO ---
+    // (A lógica do modal continua a mesma, mas agora chamará a nova saveChanges)
     window.openModal = () => { modal.style.display = 'block'; };
     window.closeModal = () => { modal.style.display = 'none'; modalForm.innerHTML = ''; };
     closeModalBtn.onclick = closeModal;
     window.onclick = (event) => { if (event.target == modal) closeModal(); };
 
     window.editSection = (sectionName) => {
-        currentEditingSection = sectionName;
-        modalTitle.textContent = `Editar ${sectionName.replace('-', ' ')}`;
-        let formHtml = '';
-
-        switch (sectionName) {
-            case 'info-pessoais':
-                const info = profileData.infoPessoais;
-                formHtml = `
-                    <div class="form-group"><label>Nome Completo</label><input type="text" id="edit-nome" value="${info.nome}"></div>
-                    <div class="form-group"><label>Título (Ex: Estudante de...)</label><input type="text" id="edit-titulo" value="${info.titulo}"></div>
-                    <div class="form-group"><label>E-mail</label><input type="email" id="edit-email" value="${info.email}"></div>
-                    <div class="form-group"><label>Telefone</label><input type="tel" id="edit-telefone" value="${info.telefone}"></div>
-                    <div class="form-group"><label>Localização</label><input type="text" id="edit-localizacao" value="${info.localizacao}"></div>
-                    <div class="form-group"><label>Link do Currículo Lattes</label><input type="url" id="edit-lattes" value="${info.lattes}"></div>
-                `;
-                break;
-            case 'idiomas':
-                 formHtml = profileData.idiomas.map((lang, index) => `
-                    <div class="item-form" data-index="${index}">
-                        <input type="text" value="${lang.idioma}" placeholder="Idioma">
-                        <input type="text" value="${lang.nivel}" placeholder="Nível">
-                        <button onclick="removeItem('idiomas', ${index})">&times;</button>
-                    </div>
-                `).join('') + '<button class="add-btn" onclick="addItem(\'idiomas\')">+ Adicionar Idioma</button>';
-                break;
-            case 'formacao':
-                 formHtml = profileData.formacao.map((edu, index) => `
-                    <div class="item-form" data-index="${index}">
-                         <input type="text" value="${edu.curso}" placeholder="Curso">
-                         <input type="text" value="${edu.instituicao}" placeholder="Instituição">
-                         <input type="text" value="${edu.inicio}" placeholder="Ano de Início">
-                         <input type="text" value="${edu.fim}" placeholder="Ano de Conclusão">
-                         <button onclick="removeItem('formacao', ${index})">&times;</button>
-                    </div>
-                `).join('') + '<button class="add-btn" onclick="addItem(\'formacao\')">+ Adicionar Formação</button>';
-                break;
-            case 'experiencia':
-                formHtml = profileData.experiencia.map((exp, index) => `
-                    <div class="item-form" data-index="${index}">
-                        <input type="text" value="${exp.cargo}" placeholder="Cargo">
-                        <input type="text" value="${exp.empresa}" placeholder="Empresa">
-                        <input type="text" value="${exp.inicio}" placeholder="Início">
-                        <input type="text" value="${exp.fim}" placeholder="Fim">
-                        <textarea placeholder="Descrição">${exp.descricao}</textarea>
-                        <button onclick="removeItem('experiencia', ${index})">&times;</button>
-                    </div>
-                `).join('') + '<button class="add-btn" onclick="addItem(\'experiencia\')">+ Adicionar Experiência</button>';
-                break;
-        }
+        // ... (seu código para preencher o modal)
+        // Este código pode permanecer o mesmo, pois ele lê de 'profileData'
+        // Apenas um exemplo para a seção de informações pessoais:
+        const info = profileData.infoPessoais;
+        let formHtml = `
+            <div class="form-group"><label>Nome Completo</label><input type="text" id="edit-nome" value="${info.nome}"></div>
+            <div class="form-group"><label>Título (Ex: Estudante de...)</label><input type="text" id="edit-titulo" value="${info.titulo}"></div>
+            <div class="form-group"><label>E-mail</label><input type="email" id="edit-email" value="${info.email}"></div>
+            <div class="form-group"><label>Telefone</label><input type="tel" id="edit-telefone" value="${info.telefone}"></div>
+            <div class="form-group"><label>Localização</label><input type="text" id="edit-localizacao" value="${info.localizacao}"></div>
+            <div class="form-group"><label>Link do Currículo Lattes</label><input type="url" id="edit-lattes" value="${info.lattes}"></div>
+        `;
         modalForm.innerHTML = formHtml;
+        modalTitle.textContent = 'Editar Informações Pessoais';
         openModal();
     };
 
-    window.saveChanges = () => {
-        switch (currentEditingSection) {
-            case 'info-pessoais':
-                profileData.infoPessoais = {
-                    nome: document.getElementById('edit-nome').value,
-                    titulo: document.getElementById('edit-titulo').value,
-                    foto: document.getElementById('edit-nome').value.charAt(0).toUpperCase(),
-                    email: document.getElementById('edit-email').value,
-                    telefone: document.getElementById('edit-telefone').value,
-                    localizacao: document.getElementById('edit-localizacao').value,
-                    lattes: document.getElementById('edit-lattes').value,
-                };
-                break;
-            // Para seções com múltiplos itens
-            default:
-                const items = [];
-                const itemForms = modalForm.querySelectorAll('.item-form');
-                itemForms.forEach(form => {
-                    const inputs = form.querySelectorAll('input, textarea');
-                    let itemData = {};
-                    if(currentEditingSection === 'idiomas') itemData = {idioma: inputs[0].value, nivel: inputs[1].value};
-                    if(currentEditingSection === 'formacao') itemData = {curso: inputs[0].value, instituicao: inputs[1].value, inicio: inputs[2].value, fim: inputs[3].value};
-                    if(currentEditingSection === 'experiencia') itemData = {cargo: inputs[0].value, empresa: inputs[1].value, inicio: inputs[2].value, fim: inputs[3].value, descricao: inputs[4].value};
-                    items.push(itemData);
-                });
-                profileData[currentEditingSection] = items;
-                break;
-        }
-
-        saveProfileData();
-        renderAll();
-        closeModal();
-    };
-    
-    // Funções para adicionar/remover itens dinamicamente no modal (precisam estar no escopo global)
-    window.addItem = (section) => { /* lógica para adicionar campos vazios no modal */ };
-    window.removeItem = (section, index) => { /* lógica para remover um item e re-renderizar o form do modal */ };
-
+    // Atribui a função de salvar ao botão do modal
+    const saveBtn = document.querySelector(".save-btn");
+    if(saveBtn) saveBtn.onclick = saveChanges;
 
     // --- LÓGICA DA SIDEBAR ---
     const setActiveLink = () => {
@@ -286,20 +236,13 @@ window.saveChanges = () => {
     const loadSidebarUserInfo = () => {
         const userNameElement = document.getElementById('sidebarUserName');
         const userAvatarElement = document.getElementById('userAvatar');
-        const loggedInUserName = localStorage.getItem('userName') || profileData.infoPessoais.nome;
-
-        if (loggedInUserName) {
-            userNameElement.textContent = loggedInUserName;
-            userAvatarElement.textContent = loggedInUserName.charAt(0).toUpperCase();
-        }
-    };
-
-    window.toggleSidebarMobile = () => {
-        sidebar.classList.toggle('show');
+        const loggedInUserName = localStorage.getItem('userName') || "Usuário";
+        
+        userNameElement.textContent = loggedInUserName;
+        userAvatarElement.textContent = loggedInUserName.charAt(0).toUpperCase();
     };
 
     // --- INICIALIZAÇÃO ---
-    loadProfileData();
-    renderAll();
+    loadProfileData(); // Ponto de partida principal
     setActiveLink();
 });

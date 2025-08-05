@@ -11,21 +11,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- FUNÇÕES AUXILIARES ---
 
-    /**
-     * Valida se um e-mail possui um formato válido.
-     * @param {string} email O e-mail a ser validado.
-     * @returns {boolean}
-     */
     const isValidEmail = (email) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return re.test(String(email).toLowerCase());
     };
 
-    /**
-     * Mostra uma mensagem de erro para um campo do formulário.
-     * @param {HTMLInputElement} inputElement - O elemento input.
-     * @param {string} message - A mensagem de erro.
-     */
     const showError = (inputElement, message) => {
         const errorDiv = document.getElementById(`${inputElement.id}Error`);
         inputElement.classList.add('error');
@@ -36,10 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    /**
-     * Limpa a mensagem de erro de um campo.
-     * @param {HTMLInputElement} inputElement - O elemento input.
-     */
     const clearError = (inputElement) => {
         const errorDiv = document.getElementById(`${inputElement.id}Error`);
         inputElement.classList.remove('error');
@@ -48,11 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
     
-    /**
-     * Mostra um alerta (Bootstrap) no topo do formulário.
-     * @param {string} message - A mensagem do alerta.
-     * @param {string} type - O tipo do alerta ('success', 'danger', 'warning').
-     */
     const showAlert = (message, type = 'danger') => {
         alertContainer.innerHTML = `
             <div class="alert alert-${type}" role="alert">
@@ -66,11 +47,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const validateForm = () => {
         let isValid = true;
 
-        // Limpa erros anteriores
         clearError(emailInput);
         clearError(passwordInput);
 
-        // Validação do E-mail
         if (emailInput.value.trim() === "") {
             showError(emailInput, "O campo e-mail é obrigatório.");
             isValid = false;
@@ -81,7 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
             emailInput.classList.add('success');
         }
 
-        // Validação da Senha
         if (passwordInput.value.trim() === "") {
             showError(passwordInput, "O campo senha é obrigatório.");
             isValid = false;
@@ -95,55 +73,64 @@ document.addEventListener("DOMContentLoaded", () => {
         return isValid;
     };
     
-    // Limpa erros em tempo real enquanto o usuário digita
     emailInput.addEventListener('input', () => clearError(emailInput));
     passwordInput.addEventListener('input', () => clearError(passwordInput));
 
-
-    // --- LÓGICA DE SUBMISSÃO E LOGIN ---
+    // --- LÓGICA DE SUBMISSÃO E LOGIN (CONECTADO AO BACKEND) ---
 
     loginForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        alertContainer.innerHTML = ''; // Limpa alertas antigos
+        alertContainer.innerHTML = '';
 
         if (!validateForm()) {
             return;
         }
 
-        // Ativa o estado de carregamento do botão
         loginBtn.disabled = true;
         loadingSpinner.style.display = 'inline-block';
         btnText.textContent = 'Entrando...';
 
-        // Simula uma chamada de API com 2 segundos de atraso
-        setTimeout(() => {
-            // DADOS FICTÍCIOS PARA SIMULAÇÃO
-            const dummyEmail = "usuario@rocketlab.com";
-            const dummyPassword = "password123";
-            const dummyUserName = "Usuário Teste";
+        const loginData = {
+            email: emailInput.value,
+            password: passwordInput.value,
+        };
 
-            if (emailInput.value === dummyEmail && passwordInput.value === dummyPassword) {
-                showAlert('Login realizado com sucesso! Redirecionando...', 'success');
-                
-                localStorage.setItem('userName', dummyUserName);
+        // Para depuração: verificar o que está sendo enviado
+        console.log("Enviando para a API:", loginData);
 
-                setTimeout(() => {
-                    window.location.href = 'iniciodepois.html';
-                }, 1500);
-
-            } else {
-                // FALHA NO LOGIN
-                showAlert('E-mail ou senha incorretos. Por favor, tente novamente.', 'danger');
-                
-                // Reseta o botão para o estado normal
-                loginBtn.disabled = false;
-                loadingSpinner.style.display = 'none';
-                btnText.textContent = 'Entrar';
-                passwordInput.value = ""; // Limpa a senha por segurança
-                passwordInput.classList.remove('success', 'error');
+        fetch('http://localhost:3000/api/login', { // CORRIGIDO: Porta 3001
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(loginData),
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => { throw new Error(err.error || 'Erro desconhecido no servidor'); });
             }
+            return response.json();
+        })
+        .then(data => {
+            showAlert('Login realizado com sucesso! Redirecionando...', 'success');
+            
+            localStorage.setItem('authToken', data.session.access_token);
+            localStorage.setItem('userName', data.user.nome_completo);
 
-        }, 2000);
+            setTimeout(() => {
+                window.location.href = 'iniciodepois.html';
+            }, 1500);
+        })
+        .catch(error => {
+            console.error('Erro de login:', error);
+            showAlert(error.message || 'E-mail ou senha incorretos. Tente novamente.', 'danger');
+            
+            loginBtn.disabled = false;
+            loadingSpinner.style.display = 'none';
+            btnText.textContent = 'Entrar';
+            passwordInput.value = "";
+            passwordInput.classList.remove('success', 'error');
+        });
     });
     
     // --- LINK "ESQUECEU A SENHA" ---
@@ -152,5 +139,4 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         alert('Funcionalidade de recuperação de senha ainda não implementada.');
     });
-
 });

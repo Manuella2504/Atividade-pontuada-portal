@@ -139,9 +139,16 @@
 
                 <button type="submit" class="submit-btn">Enviar Feedback</button>
 
-                <div id="successMessage" class="success-message">
-                    Feedback enviado com sucesso! Obrigado pela sua contribuição.
-                </div>
+                <div id="confirmationModal" class="modal-confirm">
+        <div class="modal-confirm-content">
+            <h2>Confirmar Envio</h2>
+            <p>Você tem certeza de que deseja enviar este feedback?</p>
+            <div class="modal-confirm-buttons">
+                <button id="cancelSendBtn" class="btn btn-secondary">Cancelar</button>
+                <button id="confirmSendBtn" class="btn btn-primary">Sim, Enviar</button>
+            </div>
+        </div>
+    </div>
             </form>
         </div>
     </main>

@@ -4,81 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulário de Feedback - RocketLab</title>
+    <link rel="shortcut icon" href="../IMAGENS/Logo roxa.png" type="image/x-icon">
+    
     <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <link rel="stylesheet" href="../CSS/formulario.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="./JS/formulario.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-    <link rel="stylesheet" href="header.css">
-    <link rel="shortcut icon" href="../IMAGENS/Logo roxa.png" type="image/x-icon">
-    <script src="../JS/shared.js" defer></script>
 </head>
 <body>
-    <!-- Header -->
-    <header class="main-header"></header>
-
-        <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-        <h4 class="brand-text">LabRocket</h4>
-    </div>
-
-    <nav class="sidebar-nav">
-        <div class="nav-section-title">Principal</div>
-        <div class="nav-item">
-            <a href="iniciodepois.html" class="nav-link">
-                <i class="fas fa-home"></i>
-                <span class="nav-text">Início</span>
-            </a>
+        <div class="sidebar-header">
+            <h4 class="brand-text">LabRocket</h4>
         </div>
-        <div class="nav-item">
-            <a href="perfil.html" class="nav-link">
-                <i class="fas fa-user-circle"></i>
-                <span class="nav-text">Meu Perfil</span>
-            </a>
-        </div>
-        <div class="nav-item">
-            <a href="projetosescolares.html" class="nav-link">
-                <i class="fas fa-flask"></i>
-                <span class="nav-text">Projetos</span>
-            </a>
-        </div>
-        <div class="nav-item">
-            <a href="eventos.html" class="nav-link">
-                <i class="fas fa-calendar-alt"></i>
-                <span class="nav-text">Eventos</span>
-            </a>
-        </div>
-
-        <div class="nav-section-title">Comunidade</div>
-        <div class="nav-item">
-            <a href="quemsomos.html" class="nav-link">
-                <i class="fas fa-users"></i>
-                <span class="nav-text">Quem Somos</span>
-            </a>
-        </div>
-        <div class="nav-item">
-            <a href="formulario.html" class="nav-link">
-                <i class="fas fa-headset"></i>
-                <span class="nav-text">Suporte</span>
-            </a>
-        </div>
-    </nav>
-
-    <div class="user-profile">
-        <div class="user-avatar" id="userAvatar">U</div>
-        <div class="user-info">
-            <p class="user-name" id="sidebarUserName">Usuário</p>
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">Principal</div>
+            <div class="nav-item">
+                <a href="iniciodepois.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span class="nav-text">Início</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="perfil.html" class="nav-link">
+                    <i class="fas fa-user-circle"></i>
+                    <span class="nav-text">Meu Perfil</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="projetosescolares.html" class="nav-link">
+                    <i class="fas fa-flask"></i>
+                    <span class="nav-text">Projetos</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="eventos.html" class="nav-link">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span class="nav-text">Eventos</span>
+                </a>
+            </div>
+            <div class="nav-section-title">Comunidade</div>
+            <div class="nav-item">
+                <a href="quemsomos.html" class="nav-link">
+                    <i class="fas fa-users"></i>
+                    <span class="nav-text">Quem Somos</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="formulario.html" class="nav-link active">
+                    <i class="fas fa-headset"></i>
+                    <span class="nav-text">Suporte</span>
+                </a>
+            </div>
+        </nav>
+        <div class="user-profile">
+            <div class="user-avatar" id="userAvatar">U</div>
+            <div class="user-info">
+                <p class="user-name" id="sidebarUserName">Usuário</p>
+            </div>
         </div>
     </div>
-</div>
 
-<button class="mobile-toggle" onclick="toggleSidebarMobile()">
-    <i class="fas fa-bars"></i>
-</button>
+    <button class="mobile-toggle" onclick="toggleSidebarMobile()">
+        <i class="fas fa-bars"></i>
+    </button>
 
     <main class="main-content">
         <div class="form-container">
@@ -140,17 +129,26 @@
                 <button type="submit" class="submit-btn">Enviar Feedback</button>
 
                 <div id="confirmationModal" class="modal-confirm">
-        <div class="modal-confirm-content">
-            <h2>Confirmar Envio</h2>
-            <p>Você tem certeza de que deseja enviar este feedback?</p>
-            <div class="modal-confirm-buttons">
-                <button id="cancelSendBtn" class="btn btn-secondary">Cancelar</button>
-                <button id="confirmSendBtn" class="btn btn-primary">Sim, Enviar</button>
+                    <div class="modal-confirm-content">
+                        <h2>Confirmar Envio</h2>
+                        <p>Você tem certeza de que deseja enviar este feedback?</p>
+                        <div class="modal-confirm-buttons">
+                            <button type="button" id="cancelSendBtn" class="btn btn-secondary">Cancelar</button>
+                            <button type="button" id="confirmSendBtn" class="btn btn-primary">Sim, Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            
+            <div id="successMessage" class="success-message" style="display: none;">
+                Feedback enviado com sucesso! Agradecemos a sua colaboração.
             </div>
         </div>
-    </div>
-            </form>
-        </div>
     </main>
-    </body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script src="../JS/shared.js" defer></script>
+    <script src="../JS/formulario.js" defer></script>
+</body>
 </html>

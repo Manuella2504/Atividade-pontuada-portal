@@ -1,35 +1,62 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // --- SELETORES DE ELEMENTOS ---
+    // --- SELEÇÃO DE ELEMENTOS ---
     const sidebar = document.getElementById("sidebar");
     const navLinks = document.querySelectorAll(".sidebar-nav .nav-link");
     const feedbackForm = document.getElementById("feedbackForm");
-    const successMessage = document.getElementById("successMessage");
     const stars = document.querySelectorAll(".star");
     const ratingInput = document.getElementById("rating");
     const ratingText = document.getElementById("rating-text");
+    const successMessage = document.getElementById("successMessage"); // Elemento da mensagem de sucesso
 
     // Elementos do Modal de Confirmação
     const confirmationModal = document.getElementById("confirmationModal");
     const confirmSendBtn = document.getElementById("confirmSendBtn");
     const cancelSendBtn = document.getElementById("cancelSendBtn");
 
-    // --- 1. LÓGICA DO MENU LATERAL (SIDEBAR) ---
+    // --- LÓGICA DA SIDEBAR ---
+
+    /**
+     * Define o link ativo no menu de navegação.
+     */
     const setActiveLink = () => {
-        const currentPage = window.location.href;
+        const currentPage = window.location.pathname.split('/').pop() || 'formulario.html';
         navLinks.forEach(link => {
-            if (currentPage.includes(link.getAttribute("href"))) {
+            if (link.getAttribute("href") === currentPage) {
                 link.classList.add("active");
             }
         });
     };
 
-    // --- 2. MÁSCARA DE TELEFONE ---
-    // (Lembre-se de que isso depende do jQuery e da biblioteca Mask)
-    if (typeof $ !== 'undefined') {
+    /**
+     * Carrega as informações do usuário na sidebar (simulação de login).
+     */
+    const loadUserInfo = () => {
+        const userNameElement = document.getElementById('sidebarUserName');
+        const userAvatarElement = document.getElementById('userAvatar');
+        const loggedInUserName = localStorage.getItem('userName') || "Usuário";
+        
+        if(userNameElement && userAvatarElement) {
+            userNameElement.textContent = loggedInUserName;
+            userAvatarElement.textContent = loggedInUserName.charAt(0).toUpperCase();
+        }
+    };
+    
+    /**
+     * Alterna a visibilidade da sidebar em dispositivos móveis.
+     */
+    window.toggleSidebarMobile = () => {
+        sidebar.classList.toggle('show');
+    };
+
+    // --- LÓGICA DO FORMULÁRIO ---
+
+    // Aplica a máscara de telefone usando jQuery Mask
+    // (Verifica se jQuery está disponível)
+    if (typeof $ !== 'undefined' && typeof $.fn.mask !== 'undefined') {
         $('#telefone').mask('(00) 00000-0000');
     }
 
-    // --- 3. LÓGICA DA AVALIAÇÃO COM ESTRELAS (FUNÇÃO CORRIGIDA) ---
+    // Lógica para a avaliação por estrelas
     const ratingDescriptions = [
         "Clique nas estrelas para avaliar", "Ruim", "Regular", "Bom", "Muito Bom", "Excelente"
     ];
@@ -49,11 +76,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // --- 4. FUNÇÃO PARA ENVIAR OS DADOS DO FORMULÁRIO ---
+    /**
+     * Função principal para enviar os dados do formulário para o backend.
+     */
     const sendFormData = () => {
         const submitBtn = feedbackForm.querySelector(".submit-btn");
         submitBtn.disabled = true;
-        submitBtn.textContent = "Enviando...";
+        submitBtn.textContent = "A enviar...";
 
         const formData = {
             nome: document.getElementById('nome').value,
@@ -71,47 +100,61 @@ document.addEventListener("DOMContentLoaded", () => {
             body: JSON.stringify(formData),
         })
         .then(response => {
-            if (!response.ok) throw new Error('Falha no servidor.');
+            if (!response.ok) {
+                // Se o servidor retornar um erro, lança uma exceção
+                throw new Error('Falha no servidor. Tente novamente mais tarde.');
+            }
             return response.json();
         })
         .then(data => {
-            successMessage.style.display = "block";
+            // Exibe a mensagem de sucesso
+            successMessage.style.display = "block"; 
             feedbackForm.reset();
             ratingInput.value = "0";
             updateStars(0);
-            setTimeout(() => { successMessage.style.display = "none"; }, 5000);
+            
+            // Esconde a mensagem após 5 segundos
+            setTimeout(() => { 
+                successMessage.style.display = "none"; 
+            }, 5000);
         })
         .catch(error => {
             console.error('Erro ao enviar feedback:', error);
-            alert(error.message);
+            alert("Ocorreu um erro ao enviar seu feedback. " + error.message);
         })
         .finally(() => {
+            // Reativa o botão de envio, independentemente do resultado
             submitBtn.disabled = false;
             submitBtn.textContent = "Enviar Feedback";
+            closeModal();
         });
     };
+    
+    // --- LÓGICA DO MODAL DE CONFIRMAÇÃO ---
+    
+    const openModal = () => confirmationModal.style.display = "block";
+    const closeModal = () => confirmationModal.style.display = "none";
 
-    // --- 5. LÓGICA DE SUBMISSÃO E MODAL ---
+    // Abre o modal ao submeter o formulário
     feedbackForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        confirmationModal.style.display = "block";
+        openModal();
     });
 
-    cancelSendBtn.addEventListener("click", () => {
-        confirmationModal.style.display = "none";
-    });
+    // Fecha o modal ao clicar em "Cancelar"
+    cancelSendBtn.addEventListener("click", closeModal);
 
-    confirmSendBtn.addEventListener("click", () => {
-        confirmationModal.style.display = "none";
-        sendFormData();
-    });
+    // Envia os dados e fecha o modal ao clicar em "Sim, Enviar"
+    confirmSendBtn.addEventListener("click", sendFormData);
 
+    // Fecha o modal se o utilizador clicar fora da caixa de diálogo
     window.addEventListener("click", (event) => {
         if (event.target == confirmationModal) {
-            confirmationModal.style.display = "none";
+            closeModal();
         }
     });
 
     // --- INICIALIZAÇÃO ---
     setActiveLink();
-});
+    loadUserInfo();
+}); 
